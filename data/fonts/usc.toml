@@ -1,0 +1,15 @@
+# Font style metadata
+name = "TAMU"
+
+# Optional Google font URL
+google_fonts = "Oswald|Lato:400,700|Open+Sans"
+
+# Font families
+heading_font = "Oswald"
+body_font = "Open Sans"
+nav_font = "Lato"
+mono_font = "Roboto Mono"
+
+# Font size
+font_size = "18"
+font_size_small = "16"

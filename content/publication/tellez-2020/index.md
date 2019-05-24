@@ -2,7 +2,7 @@
 title: "Peace agreement design and public support for peace: Evidence from Colombia"
 authors:
 - admin
-date: "2020-02-01T00:00:00Z"
+date: "2019-05-22T00:00:00Z"
 doi: ""
 
 # Schedule page publish date (NOT publication's date).
@@ -42,7 +42,7 @@ url_video: ''
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 image:
-  #caption: 'Image credit: [**Unsplash**](https://unsplash.com/photos/jdD8gXaTZsc)'
+  #caption: 'Image credit: [**Adrienne Marshall**](https://adrienne-marshall.github.io/ggplot2_workshop/)'
   focal_point: ""
   preview_only: false
 

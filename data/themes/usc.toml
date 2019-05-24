@@ -1,0 +1,20 @@
+# Theme metadata
+name = "USC"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+primary = "#73000a"
+primary_light = "#707373"
+primary_dark = "#500000"
+
+# Menu
+menu_primary = "#ffffff"
+menu_text = "#d6d3c4"
+menu_text_active = "#73000a"
+menu_title = "#2b2b2b"
+
+# Home sections
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(239, 239, 239)"

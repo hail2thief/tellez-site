@@ -9,6 +9,6 @@ date: "2016-04-27T00:00:00Z"
 external_link: http://example.org
 
 image:
-  #caption: Photo by Toa Heftiba on Unsplash
+  caption: Figure by [Adrienne Marshall](https://adrienne-marshall.github.io/ggplot2_workshop/)
   focal_point: Smart
 ---
