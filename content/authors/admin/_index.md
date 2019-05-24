@@ -18,7 +18,7 @@ organizations:
   url: "https://www.sc.edu/study/colleges_schools/artsandsciences/political_science/index.php"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include political violence, security and development, and quantitative methods.
+bio: I research and teach on armed conflict, security and development, and quantitative methods.
 
 interests:
 - Political Violence

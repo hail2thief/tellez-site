@@ -12,7 +12,7 @@ day_night = false
 font = "usc"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
-description = ""
+description = "Juan F. Tellez is a political scientist working on armed conflict, security and development, and Latin America."
 
 # Default image for social sharing and search engines. Place image in `static/img/` folder and specify image name here.
 sharing_image = ""
