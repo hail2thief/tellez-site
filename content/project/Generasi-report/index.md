@@ -1,6 +1,6 @@
 ---
-title: Long-Term Impact Evaluation of Indonesia's Generasi Program
-summary: Impact evaluation of a massive community-driven development project in Indonesia bearing on health and education.
+title: Generasi in Indonesia
+summary: Impact evaluation of a massive community-driven development project in Indonesia bearing on improving health and education outcomes among mothers and young children.
 tags:
 - report
 date: "2016-04-27T00:00:00Z"
