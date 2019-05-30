@@ -21,7 +21,7 @@ organizations:
 bio: I research and teach on armed conflict, security and development, and quantitative methods.
 
 interests:
-- Political Violence
+- Armed Conflict
 - Development
 - Security and Governance
 - Latin America
