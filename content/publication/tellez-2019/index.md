@@ -21,7 +21,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: (2019). Published in *Journal of Conflict Resolution*.
+summary: (2019). Published in *Journal of Conflict Resolution*
 
 tags:
 #- Source Themes

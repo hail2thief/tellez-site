@@ -21,7 +21,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: Forthcoming in the *Journal of Peace Research*.
+summary: (2019). *Journal of Peace Research*.
 
 tags:
 #- Source Themes
@@ -29,7 +29,7 @@ featured: false
 
 # links:
 # - name: ""
-#   url: ""
+url_pdf: "https://journals.sagepub.com/doi/10.1177/0022343319853603"
 url_preprint: 'pdf/peace-conjoint-jpres-format.pdf'
 url_code: ''
 url_dataset: ''

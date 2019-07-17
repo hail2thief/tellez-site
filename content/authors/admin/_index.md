@@ -71,6 +71,6 @@ social:
 # - Visitors
 ---
 
-I'm an assistant professor of political science at the [University of South Carolina](https://www.sc.edu/study/colleges_schools/artsandsciences/political_science/index.php), where I teach courses in political violence and quantitative methodology. In the spring of 2019 I completed my Ph.D. in Political Science at Duke University. My research interests are in comparative politics and international relations, with a focus on armed conflict, security and development, and post-conflict transitions. 
+I'm an assistant professor of political science at the [University of South Carolina](https://www.sc.edu/study/colleges_schools/artsandsciences/political_science/index.php). My research interests are in comparative politics and international relations, with a focus on armed conflict, security and development, and post-conflict transitions. At USC, I teach courses in political violence and quantitative methodology. In the spring of 2019 I completed my Ph.D. in Political Science at Duke University. 
 
 I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/) where I collaborate on the design and evaluation of international development programs. To date I have worked on projects for USAID and the World Bank in Colombia, Indonesia, and Guatemala.
