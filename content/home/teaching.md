@@ -73,3 +73,5 @@ subtitle = ""
  # CSS class.
  css_class = ""
 +++
+
+I make websites for my courses using [Hugo](https://gohugo.io/) and blogdown. You can look through the courses below and access the source code in my [Github](https://github.com/hail2thief).

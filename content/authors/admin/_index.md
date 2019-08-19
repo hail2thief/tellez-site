@@ -77,4 +77,3 @@ In my research, I write about armed conflict, security and development, and post
 
 I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/) where I collaborate on the design and evaluation of international development programs. To date I have worked on projects for USAID and the World Bank in Colombia, Indonesia, and Guatemala.
 
-Outside of academia, I enjoy reading fiction, cooking, traveling, and playing the drums. 

@@ -6,7 +6,7 @@ tags:
 date: "2016-04-27T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
-external_link: http://example.org
+external_link: https://warf19.juanftellez.com/
 
 image:
   caption: from Medium
