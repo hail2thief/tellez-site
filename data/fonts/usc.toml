@@ -5,8 +5,8 @@ name = "TAMU"
 google_fonts = "Oswald|Lato:400,700|Open+Sans"
 
 # Font families
-heading_font = "Oswald"
-body_font = "Open Sans"
+heading_font = "Titillium Web"
+body_font = "Titillium Web"
 nav_font = "Lato"
 mono_font = "Roboto Mono"
 
