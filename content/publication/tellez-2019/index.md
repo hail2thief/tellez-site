@@ -2,7 +2,7 @@
 title: "Worlds apart: Conflict exposure and preferences for peace"
 authors:
 - admin
-date: "2019-03-01T00:00:00Z"
+date: "2018-05-28T00:00:00Z"
 doi: ""
 
 # Schedule page publish date (NOT publication's date).

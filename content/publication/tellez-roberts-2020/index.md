@@ -3,7 +3,7 @@ title: "Freedom House’s scarlet letter: Assessment power through transnational
 authors:
 - admin
 - Jordan Roberts
-date: "2019-05-24T00:00:00Z"
+date: "2019-01-01T00:00:00Z"
 doi: ""
 
 # Schedule page publish date (NOT publication's date).
