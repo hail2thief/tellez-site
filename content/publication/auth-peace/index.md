@@ -19,7 +19,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: Revise and Resubmit.
+summary: Conditionally Accepted for publication at *Journal of Politics*.
 
 tags:
 #- Source Themes
