@@ -21,7 +21,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: (2019). Published in *Journal of Peace Research*.
+summary: (2019). Published in *Journal of Peace Research*. Honorable Mention for JPR's *Nils Petter Gleditsch Article of the Year Award*.
 
 tags:
 #- Source Themes
