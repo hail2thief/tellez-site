@@ -21,7 +21,7 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Revise and Resubmit.
+summary: Revise and Resubmit. *Winner of ENMISA Outstanding Paper Award*.
 
 
 
