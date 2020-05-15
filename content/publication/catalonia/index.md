@@ -21,7 +21,7 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Revise and Resubmit. *Winner of ENMISA Outstanding Paper Award*.
+summary: Forthcoming at *The British Journal of Political Science*. Winner of *ENMISA Outstanding Paper Award*.
 
 
 
@@ -29,8 +29,8 @@ summary: Revise and Resubmit. *Winner of ENMISA Outstanding Paper Award*.
 # - name: ""
 #   url: ""
 url_pdf:
-url_preprint:
-url_code: ''
+url_preprint: pdf/catalonia.pdf
+#url_code: 'https://www.dropbox.com/s/uwd3jt2zjiy9vah/Replication.zip?dl=0'
 url_dataset: ''
 url_poster: ''
 url_project: ''

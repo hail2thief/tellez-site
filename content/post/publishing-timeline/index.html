@@ -1,0 +1,123 @@
+---
+title: 'How long until my paper is published?'
+subtitle: 'Some N = 1 observations on the publication process.'
+summary: Visualizing timelines for my paper acceptances at journals. 
+authors:
+- admin
+tags:
+categories: []
+date: "2020-05-10"
+lastmod: "15 May, 2020"
+featured: false
+draft: false
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>For me, one of the many (so many) sources of stress in graduate school was the fear that I wouldn’t have something published by the time the job market came around. At least in my program, there was a strong sense that no publications effectively meant no chance at the job market. Now that I’m on the other side of things I know that the process is much more “idiosyncratic” than that.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>And yet the worry stands, especially since (overwhelmed, understaffed) academic journals can be very slow to respond to submissions. How long should you expect to wait before finding out if a paper has made it to the Revise &amp; Resubmit stage?</p>
+<p>I’ve been keeping track of my own paper submissions over time<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and thought it would be interesting to visualize the lifecycle of these papers in order to get a sense of the what prospective authors are facing.</p>
+<pre class="r"><code>library(tidyverse)
+library(lubridate)
+library(hrbrthemes)
+library(ggforce)
+library(pander)
+library(ggalt)
+library(ggridges)</code></pre>
+<p>For some reason, I originally decided to track the submissions using <code>tibble::tribble()</code>, which lets you input rows “horizontally”, and it stuck.</p>
+<pre class="r"><code># make data
+df = tribble(
+  ~paper, ~type, ~journal, ~submit, ~decision,
+  &#39;scarlet-letter&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-11-08&#39;), ymd(&#39;2018-03-02&#39;),
+  &#39;india-police&#39;, &#39;first&#39;, &#39;world politics&#39;, ymd(&quot;2019-02-04&quot;), ymd(&quot;2019-06-19&quot;),
+  &#39;road-warrior&#39;, &#39;first&#39;, &#39;jcr&#39;, ymd(&#39;2018-07-12&#39;), ymd(&#39;2018-12-10&#39;),
+  &#39;worlds-apart&#39;, &#39;first&#39;, &#39;jcr&#39;, ymd(&#39;2017-05-07&#39;), ymd(&#39;2017-07-21&#39;),
+  &#39;worlds-apart&#39;, &#39;1st revision&#39;, &#39;jcr&#39;, ymd(&#39;2017-08-27&#39;), ymd(&#39;2017-12-30&#39;),
+  &#39;worlds-apart&#39;, &#39;2nd revision&#39;, &#39;jcr&#39;, ymd(&#39;2018-01-21&#39;), ymd(&#39;2018-02-26&#39;),
+  &#39;election-viol&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2016-09-29&#39;), ymd(&#39;2017-02-03&#39;),
+  &#39;random-forest&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2016-09-29&#39;), ymd(&#39;2017-01-04&#39;),
+  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2017-10-23&#39;), ymd(&#39;2018-03-06&#39;),
+  &#39;peace-conjoint&#39;, &#39;1st revision&#39;, &#39;jpres&#39;, ymd(&#39;2018-04-25&#39;), ymd(&#39;2018-06-28&#39;),
+  &#39;peace-conjoint&#39;, &#39;2nd revision&#39;, &#39;jpres&#39;, ymd(&#39;2018-07-05&#39;), ymd(&#39;2018-11-01&#39;),
+  &#39;peace-conjoint&#39;, &#39;3rd revision&#39;, &#39;jpres&#39;, ymd(&#39;2019-01-14&#39;), ymd(&#39;2019-05-07&#39;),
+  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;bjps&#39;, ymd(&#39;2017-10-08&#39;), ymd(&#39;2017-10-14&#39;),
+  &#39;auth-peace&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2019-01-23&#39;), ymd(&#39;2019-03-29&#39;),
+  &#39;auth-peace&#39;, &#39;1st revision&#39;, &#39;jop&#39;, ymd(&#39;2019-07-06&#39;), ymd(&#39;2019-08-21&#39;),
+  &#39;auth-peace&#39;, &#39;2nd revision&#39;, &#39;jop&#39;, ymd(&#39;2019-12-20&#39;), ymd(&#39;2020-01-15&#39;),
+  &#39;isis&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2016-07-21&#39;), ymd(&#39;2016-09-07&#39;), 
+  &#39;worlds-apart&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-02-06&#39;), ymd(&#39;2017-03-23&#39;), 
+  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-03-07&#39;), ymd(&#39;2017-06-30&#39;),
+  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;ajps&#39;, ymd(&#39;2017-07-13&#39;), ymd(&#39;2017-09-17&#39;),
+  &#39;hierarchy-order&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2018-02-24&#39;), ymd(&#39;2018-04-24&#39;),
+  &#39;hierarchy-order&#39;, &#39;1st revision&#39;, &#39;jop&#39;, ymd(&#39;2018-07-01&#39;), ymd(&#39;2018-08-21&#39;),
+  &#39;hierarchy-order&#39;, &#39;2nd revision&#39;, &#39;jop&#39;, ymd(&#39;2018-12-03&#39;), ymd(&#39;2019-02-23&#39;),
+  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&#39;2018-07-12&#39;), ymd(&#39;2018-10-29&#39;),
+  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;r&amp;p&#39;, ymd(&#39;2018-04-21&#39;), ymd(&#39;2018-06-22&#39;),
+  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;isq&#39;, ymd(&#39;2019-01-11&#39;), ymd(&#39;2019-03-18&#39;),
+  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;bjps&#39;, ymd(&#39;2019-06-06&#39;), ymd(&#39;2019-10-30&#39;), 
+  &#39;catalonia-repression&#39;, &#39;1st revision&#39;, &#39;bjps&#39;, ymd(&quot;2019-12-21&quot;), ymd(&quot;2020-04-19&quot;),
+  &#39;isis&#39;, &#39;first&#39;, &#39;ii&#39;, ymd(&#39;2017-11-14&#39;), ymd(&#39;2018-02-15&#39;),
+  &#39;isis&#39;, &#39;1st revision&#39;, &#39;ii&#39;, ymd(&#39;2018-06-10&#39;), ymd(&#39;2018-07-12&#39;),
+  &#39;isis&#39;, &#39;2nd revision&#39;, &#39;ii&#39;, ymd(&#39;2018-08-23&#39;), ymd(&#39;2018-10-03&#39;),
+  &#39;random-forest&#39;, &#39;first&#39;, &#39;cmps&#39;, ymd(&#39;2017-02-17&#39;), ymd(&#39;2017-06-26&#39;), 
+  &#39;election-viol&#39;, &#39;first&#39;, &#39;cmps&#39;, ymd(&#39;2017-06-08&#39;), ymd(&#39;2017-08-15&#39;), 
+  &#39;dyads&#39;, &#39;first&#39;, &#39;pa&#39;, ymd(&#39;2017-10-30&#39;), ymd(&#39;2017-12-20&#39;),
+  &#39;dyads&#39;, &#39;first&#39;, &#39;apsr&#39;, ymd(&#39;2018-04-12&#39;), ymd(&#39;2018-05-20&#39;),
+  &#39;dyads&#39;, &#39;first&#39;, &#39;psrm&#39;, ymd(&#39;2019-07-15&#39;), ymd(&#39;2019-12-11&#39;),
+  &#39;dyads&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&#39;2018-10-03&#39;), ymd(&#39;2019-07-02&#39;),
+  &#39;election-violence&#39;, &#39;first&#39;, &quot;jpres&quot;, ymd(&quot;2016-07-29&quot;), ymd(&quot;2017-02-03&quot;),
+  &#39;displace&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&quot;2020-01-19&quot;), ymd(&quot;2020-04-15&quot;)) %&gt;% 
+  mutate(duration = difftime(decision, submit, units = &quot;day&quot;),
+         type = as_factor(type)) %&gt;% 
+  select(-journal) %&gt;% 
+  arrange(paper)</code></pre>
+<div id="the-timeline" class="section level2">
+<h2>The Timeline</h2>
+<p>I’m using the <code>ggalt::geom_dumbbell()</code> geometry to visualize the trajectory of each paper.</p>
+<pre class="r"><code>ggplot(df, aes(x = submit, xend = decision, 
+             y = paper, label = duration, 
+             color = type)) + 
+  geom_dumbbell(size = 1, size_x = 1) + 
+  labs(x=NULL, color = &#39;Submission round:&#39;,
+       y=NULL, 
+       title=&quot;Timeline of Journal Submissions&quot;, 
+       subtitle=&quot;Start date, decision date, and wait time (in months) for my papers. Note: there are def some missing submit attempts here.&quot;) +
+  theme_ipsum_tw() + 
+  ggrepel::geom_label_repel(nudge_y = -.5) + 
+  theme(legend.position = &#39;top&#39;) + 
+  NULL</code></pre>
+<p><img src="/post/publishing-timeline/index_files/figure-html/dumbbell-1.png" width="1152" /></p>
+<p>The first, obvious barrier to publication is getting past reviewers in the initial submission stage and to an invitation to revise and resubmit (R&amp;R). One thing that quickly stands out is how much papers can vary in clearing the initial submission (the red “dashes”). Some papers can take a long time to find a home; <code>dyads</code> has been submitted to four different journals (actually, I think I’m missing a submission here) without landing an invitation to revise. Other papers, like <code>hierarchy-order</code>, landed an R&amp;R on the first try.</p>
+<p>Getting through that first barrier is crucial and the time to decision can vary a lot. In my experience, the median time to decision on a first submission is about 93 days, but can vary a lot: I’ve waited as long as 270 days (!!!) for a response. R&amp;R’s are a good deal faster (median = 57 days) but also vary.</p>
+<pre class="r"><code>df %&gt;% 
+  filter(type != &quot;3rd revision&quot;) %&gt;% # too few of these to bother
+  ggplot(aes(y = type, x = duration)) + 
+  geom_density_ridges(quantile_lines = TRUE, fill = &quot;black&quot;,
+                      quantiles = 2, color = &quot;white&quot;, size = 1) + 
+  theme_ipsum_tw(grid = &quot;X&quot;) + 
+  theme(legend.position = &quot;none&quot;) + 
+  labs(x = NULL, y = NULL, 
+       title = &quot;Waiting to Hear Back from Journals&quot;, 
+       subtitle = &quot;Number of days between submitting a paper and hearing back at each stage of publication process.&quot;)</code></pre>
+<p><img src="/post/publishing-timeline/index_files/figure-html/ridges-1.png" width="1152" /></p>
+<p>Getting to an R&amp;R is only part of the battle: actually <em>revising</em> the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With <code>worlds-apart</code>, my first publication, I got a quick R&amp;R within a month and a half of initial submission the summer before my (first) attempt at the job market. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about <em>4 months</em> to get a decision back on that R&amp;R. I spent another 20 days or so turning that around, and then the final decision took about a month.</p>
+</div>
+<div id="the-tradeoffs" class="section level2">
+<h2>The Tradeoffs</h2>
+<p>These timelines put pressure on graduate students that shapes their work in different ways. Working backwards from a job market that starts in September, I would have needed to submit <code>worlds-apart</code> in December of the prior year to have something accepted for publication. But note that this is assuming <em>the paper lands at the first place I sent it</em>. If I had sent it to a different journal first and failed there, I would have to add another 2 months or so to that timeline. And getting something R&amp;R’d in two tries is not easy! At some point, this means graduate students might need to be pushing papers out for submission early in graduate school, when most programs assume they are still just learning the ropes.</p>
+<p>The other big implication is that students face a big trade-off in terms of ambition of publication venue and having early publications. Do you send the paper to the top-3 journal with the miniscule acceptance rates and risk not having anything for the market, or do you send it to a lower-tier journal but miss out on a potential “big hit” that could have big implications for your career down the line?</p>
+<p>These pressures and trade-offs are obviously all starker for students who don’t come from wealthy families or who have families of their own they need to support. Without a TT job, workshopping a paper for years to boost its chances at a top hit is a tremendous privilege.</p>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>This is mostly a depressing post but that’s the nature of the topic. My main advice to graduate students on this front would be to pursue co-author opportunities early, with other graduate students or with faculty. There’s also no perfect paper, and I think there’s a risk in waiting too long to send things out.</p>
+<p>But these are just my two cents.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>At this point I’ve seen folks with multiple publications, “top-3” publications, records that would put them at 2/3 or more of the way to tenure at many universities – not get jobs. Little about this process feels fair or systematic.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>This data is imperfect. Some of these papers have been submitted more than seen below, but I forgot to log the submission. Oh well!<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

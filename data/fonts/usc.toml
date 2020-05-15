@@ -5,10 +5,10 @@ name = "TAMU"
 google_fonts = "Oswald|Lato:400,700|Open+Sans"
 
 # Font families
-heading_font = "Overpass"
-body_font = "Overpass"
+heading_font = "IBM Plex Sans"
+body_font = "IBM Plex Sans Light"
 nav_font = "Lato"
-mono_font = "Roboto Mono"
+mono_font = "Inconsolata"
 
 # Font size
 font_size = "18"

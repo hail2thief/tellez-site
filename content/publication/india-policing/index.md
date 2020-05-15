@@ -21,16 +21,16 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Conditionally Accepted at *World Politics*.
+summary: Forthcoming at *World Politics*.
 
 
 
 # links:
 # - name: ""
 #   url: ""
-url_pdf:
-url_preprint:
-url_code: ''
+url_pdf: 
+url_preprint: pdf/main.pdf
+#url_code: 'https://www.dropbox.com/sh/dv17mraosznasl1/AACuD2Uy4MFM_ar1TTWAFjj9a?dl=0'
 url_dataset: ''
 url_poster: ''
 url_project: ''

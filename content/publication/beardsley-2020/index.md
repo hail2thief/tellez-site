@@ -25,7 +25,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: Forthcoming in *The Journal of Politics*.
+summary: (2020). Published in *The Journal of Politics*.
 
 tags:
 #- Source Themes

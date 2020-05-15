@@ -19,7 +19,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: Conditionally Accepted for publication at *Journal of Politics*.
+summary: Forthcoming at *Journal of Politics*.
 
 tags:
 #- Source Themes
@@ -29,8 +29,8 @@ featured: false
 # - name: ""
 #   url: ""
 url_pdf: 
-url_preprint: 
-url_code: ''
+url_preprint: pdf/auth-peace.pdf
+#url_code: 'https://www.dropbox.com/s/uefb02u192mtld4/repFiles.zip?dl=0'
 url_dataset: ''
 url_poster: ''
 url_project: ''
