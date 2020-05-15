@@ -1,5 +1,5 @@
 ---
-title: "‘Peace without impunity’: Values in the settlement of civil wars"
+title: "‘Peace without impunity’: World-view in the settlement of civil wars"
 authors:
 - admin
 date: "2020-01-03T11:00:00Z"
