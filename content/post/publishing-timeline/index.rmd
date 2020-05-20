@@ -28,7 +28,7 @@ And yet the worry stands, especially since (overwhelmed, understaffed) academic 
 I've been keeping track of my own paper submissions over time^[This data is imperfect. Some of these papers have been submitted more than seen below, but I forgot to log the submission. Oh well!] and thought it would be interesting to visualize the lifecycle of these projects.   
 
 
-```{r load-libraries,echo=TRUE}
+```{r load-libraries,echo=FALSE}
 library(tidyverse)
 library(lubridate)
 library(hrbrthemes)
@@ -39,10 +39,10 @@ library(ggridges)
 ```
 
 
-For some reason, I originally decided to track the submissions using `tibble::tribble()`, which lets you input rows "horizontally", and it stuck. 
+<!-- For some reason, I originally decided to track the submissions using `tibble::tribble()`, which lets you input rows "horizontally", and it stuck.  -->
 
 
-```{r load-data, echo=TRUE, results='asis'}
+```{r load-data, echo=FALSE, results='asis'}
 # make data
 df = tribble(
   ~paper, ~type, ~journal, ~submit, ~decision,
@@ -90,6 +90,7 @@ df = tribble(
          type = as_factor(type)) %>% 
   select(-journal) %>% 
   arrange(paper)
+pander(df)
 ```
 
 

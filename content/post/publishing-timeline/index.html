@@ -18,61 +18,307 @@ draft: false
 <p>For me, one of the many (so many) sources of stress in graduate school was the fear that I wouldn’t have something published by the time the job market came around. At least in my program, there was a strong sense that no publications effectively meant no chance at a job. Now that I’m on the other side of things I know that the process is much more “idiosyncratic” than that.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p>And yet the worry stands, especially since (overwhelmed, understaffed) academic journals can be slow to respond to submissions. How long should you expect to wait before finding out if a paper has made it to the Revise &amp; Resubmit stage?</p>
 <p>I’ve been keeping track of my own paper submissions over time<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and thought it would be interesting to visualize the lifecycle of these projects.</p>
-<pre class="r"><code>library(tidyverse)
-library(lubridate)
-library(hrbrthemes)
-library(ggforce)
-library(pander)
-library(ggalt)
-library(ggridges)</code></pre>
-<p>For some reason, I originally decided to track the submissions using <code>tibble::tribble()</code>, which lets you input rows “horizontally”, and it stuck.</p>
-<pre class="r"><code># make data
-df = tribble(
-  ~paper, ~type, ~journal, ~submit, ~decision,
-  &#39;scarlet-letter&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-11-08&#39;), ymd(&#39;2018-03-02&#39;),
-  &#39;india-police&#39;, &#39;first&#39;, &#39;world politics&#39;, ymd(&quot;2019-02-04&quot;), ymd(&quot;2019-06-19&quot;),
-  &#39;road-warrior&#39;, &#39;first&#39;, &#39;jcr&#39;, ymd(&#39;2018-07-12&#39;), ymd(&#39;2018-12-10&#39;),
-  &#39;road-warrior&#39;, &#39;first&#39;, &#39;bjps&#39;, ymd(&quot;2020-04-30&quot;), ymd(&quot;2020-05-19&quot;),
-  &#39;worlds-apart&#39;, &#39;first&#39;, &#39;jcr&#39;, ymd(&#39;2017-05-07&#39;), ymd(&#39;2017-07-21&#39;),
-  &#39;worlds-apart&#39;, &#39;1st revision&#39;, &#39;jcr&#39;, ymd(&#39;2017-08-27&#39;), ymd(&#39;2017-12-30&#39;),
-  &#39;worlds-apart&#39;, &#39;2nd revision&#39;, &#39;jcr&#39;, ymd(&#39;2018-01-21&#39;), ymd(&#39;2018-02-26&#39;),
-  &#39;election-viol&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2016-09-29&#39;), ymd(&#39;2017-02-03&#39;),
-  &#39;random-forest&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2016-09-29&#39;), ymd(&#39;2017-01-04&#39;),
-  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;jpres&#39;, ymd(&#39;2017-10-23&#39;), ymd(&#39;2018-03-06&#39;),
-  &#39;peace-conjoint&#39;, &#39;1st revision&#39;, &#39;jpres&#39;, ymd(&#39;2018-04-25&#39;), ymd(&#39;2018-06-28&#39;),
-  &#39;peace-conjoint&#39;, &#39;2nd revision&#39;, &#39;jpres&#39;, ymd(&#39;2018-07-05&#39;), ymd(&#39;2018-11-01&#39;),
-  &#39;peace-conjoint&#39;, &#39;3rd revision&#39;, &#39;jpres&#39;, ymd(&#39;2019-01-14&#39;), ymd(&#39;2019-05-07&#39;),
-  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;bjps&#39;, ymd(&#39;2017-10-08&#39;), ymd(&#39;2017-10-14&#39;),
-  &#39;auth-peace&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2019-01-23&#39;), ymd(&#39;2019-03-29&#39;),
-  &#39;auth-peace&#39;, &#39;1st revision&#39;, &#39;jop&#39;, ymd(&#39;2019-07-06&#39;), ymd(&#39;2019-08-21&#39;),
-  &#39;auth-peace&#39;, &#39;2nd revision&#39;, &#39;jop&#39;, ymd(&#39;2019-12-20&#39;), ymd(&#39;2020-01-15&#39;),
-  &#39;isis&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2016-07-21&#39;), ymd(&#39;2016-09-07&#39;), 
-  &#39;worlds-apart&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-02-06&#39;), ymd(&#39;2017-03-23&#39;), 
-  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2017-03-07&#39;), ymd(&#39;2017-06-30&#39;),
-  &#39;peace-conjoint&#39;, &#39;first&#39;, &#39;ajps&#39;, ymd(&#39;2017-07-13&#39;), ymd(&#39;2017-09-17&#39;),
-  &#39;hierarchy-order&#39;, &#39;first&#39;, &#39;jop&#39;, ymd(&#39;2018-02-24&#39;), ymd(&#39;2018-04-24&#39;),
-  &#39;hierarchy-order&#39;, &#39;1st revision&#39;, &#39;jop&#39;, ymd(&#39;2018-07-01&#39;), ymd(&#39;2018-08-21&#39;),
-  &#39;hierarchy-order&#39;, &#39;2nd revision&#39;, &#39;jop&#39;, ymd(&#39;2018-12-03&#39;), ymd(&#39;2019-02-23&#39;),
-  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&#39;2018-07-12&#39;), ymd(&#39;2018-10-29&#39;),
-  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;r&amp;p&#39;, ymd(&#39;2018-04-21&#39;), ymd(&#39;2018-06-22&#39;),
-  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;isq&#39;, ymd(&#39;2019-01-11&#39;), ymd(&#39;2019-03-18&#39;),
-  &#39;catalonia-repression&#39;, &#39;first&#39;, &#39;bjps&#39;, ymd(&#39;2019-06-06&#39;), ymd(&#39;2019-10-30&#39;), 
-  &#39;catalonia-repression&#39;, &#39;1st revision&#39;, &#39;bjps&#39;, ymd(&quot;2019-12-21&quot;), ymd(&quot;2020-04-19&quot;),
-  &#39;isis&#39;, &#39;first&#39;, &#39;ii&#39;, ymd(&#39;2017-11-14&#39;), ymd(&#39;2018-02-15&#39;),
-  &#39;isis&#39;, &#39;1st revision&#39;, &#39;ii&#39;, ymd(&#39;2018-06-10&#39;), ymd(&#39;2018-07-12&#39;),
-  &#39;isis&#39;, &#39;2nd revision&#39;, &#39;ii&#39;, ymd(&#39;2018-08-23&#39;), ymd(&#39;2018-10-03&#39;),
-  &#39;random-forest&#39;, &#39;first&#39;, &#39;cmps&#39;, ymd(&#39;2017-02-17&#39;), ymd(&#39;2017-06-26&#39;), 
-  &#39;election-viol&#39;, &#39;first&#39;, &#39;cmps&#39;, ymd(&#39;2017-06-08&#39;), ymd(&#39;2017-08-15&#39;), 
-  &#39;dyads&#39;, &#39;first&#39;, &#39;pa&#39;, ymd(&#39;2017-10-30&#39;), ymd(&#39;2017-12-20&#39;),
-  &#39;dyads&#39;, &#39;first&#39;, &#39;apsr&#39;, ymd(&#39;2018-04-12&#39;), ymd(&#39;2018-05-20&#39;),
-  &#39;dyads&#39;, &#39;first&#39;, &#39;psrm&#39;, ymd(&#39;2019-07-15&#39;), ymd(&#39;2019-12-11&#39;),
-  &#39;dyads&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&#39;2018-10-03&#39;), ymd(&#39;2019-07-02&#39;),
-  &#39;election-violence&#39;, &#39;first&#39;, &quot;jpres&quot;, ymd(&quot;2016-07-29&quot;), ymd(&quot;2017-02-03&quot;),
-  &#39;displace&#39;, &#39;first&#39;, &#39;io&#39;, ymd(&quot;2020-01-19&quot;), ymd(&quot;2020-04-15&quot;)) %&gt;% 
-  mutate(duration = difftime(decision, submit, units = &quot;day&quot;),
-         type = as_factor(type)) %&gt;% 
-  select(-journal) %&gt;% 
-  arrange(paper)</code></pre>
+<!-- For some reason, I originally decided to track the submissions using `tibble::tribble()`, which lets you input rows "horizontally", and it stuck.  -->
+<table>
+<colgroup>
+<col width="29%" />
+<col width="19%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">paper</th>
+<th align="center">type</th>
+<th align="center">submit</th>
+<th align="center">decision</th>
+<th align="center">duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">auth-peace</td>
+<td align="center">first</td>
+<td align="center">2019-01-23</td>
+<td align="center">2019-03-29</td>
+<td align="center">65 days</td>
+</tr>
+<tr class="even">
+<td align="center">auth-peace</td>
+<td align="center">1st revision</td>
+<td align="center">2019-07-06</td>
+<td align="center">2019-08-21</td>
+<td align="center">46 days</td>
+</tr>
+<tr class="odd">
+<td align="center">auth-peace</td>
+<td align="center">2nd revision</td>
+<td align="center">2019-12-20</td>
+<td align="center">2020-01-15</td>
+<td align="center">26 days</td>
+</tr>
+<tr class="even">
+<td align="center">catalonia-repression</td>
+<td align="center">first</td>
+<td align="center">2018-07-12</td>
+<td align="center">2018-10-29</td>
+<td align="center">109 days</td>
+</tr>
+<tr class="odd">
+<td align="center">catalonia-repression</td>
+<td align="center">first</td>
+<td align="center">2018-04-21</td>
+<td align="center">2018-06-22</td>
+<td align="center">62 days</td>
+</tr>
+<tr class="even">
+<td align="center">catalonia-repression</td>
+<td align="center">first</td>
+<td align="center">2019-01-11</td>
+<td align="center">2019-03-18</td>
+<td align="center">66 days</td>
+</tr>
+<tr class="odd">
+<td align="center">catalonia-repression</td>
+<td align="center">first</td>
+<td align="center">2019-06-06</td>
+<td align="center">2019-10-30</td>
+<td align="center">146 days</td>
+</tr>
+<tr class="even">
+<td align="center">catalonia-repression</td>
+<td align="center">1st revision</td>
+<td align="center">2019-12-21</td>
+<td align="center">2020-04-19</td>
+<td align="center">120 days</td>
+</tr>
+<tr class="odd">
+<td align="center">displace</td>
+<td align="center">first</td>
+<td align="center">2020-01-19</td>
+<td align="center">2020-04-15</td>
+<td align="center">87 days</td>
+</tr>
+<tr class="even">
+<td align="center">dyads</td>
+<td align="center">first</td>
+<td align="center">2017-10-30</td>
+<td align="center">2017-12-20</td>
+<td align="center">51 days</td>
+</tr>
+<tr class="odd">
+<td align="center">dyads</td>
+<td align="center">first</td>
+<td align="center">2018-04-12</td>
+<td align="center">2018-05-20</td>
+<td align="center">38 days</td>
+</tr>
+<tr class="even">
+<td align="center">dyads</td>
+<td align="center">first</td>
+<td align="center">2019-07-15</td>
+<td align="center">2019-12-11</td>
+<td align="center">149 days</td>
+</tr>
+<tr class="odd">
+<td align="center">dyads</td>
+<td align="center">first</td>
+<td align="center">2018-10-03</td>
+<td align="center">2019-07-02</td>
+<td align="center">272 days</td>
+</tr>
+<tr class="even">
+<td align="center">election-viol</td>
+<td align="center">first</td>
+<td align="center">2016-09-29</td>
+<td align="center">2017-02-03</td>
+<td align="center">127 days</td>
+</tr>
+<tr class="odd">
+<td align="center">election-viol</td>
+<td align="center">first</td>
+<td align="center">2017-06-08</td>
+<td align="center">2017-08-15</td>
+<td align="center">68 days</td>
+</tr>
+<tr class="even">
+<td align="center">election-violence</td>
+<td align="center">first</td>
+<td align="center">2016-07-29</td>
+<td align="center">2017-02-03</td>
+<td align="center">189 days</td>
+</tr>
+<tr class="odd">
+<td align="center">hierarchy-order</td>
+<td align="center">first</td>
+<td align="center">2018-02-24</td>
+<td align="center">2018-04-24</td>
+<td align="center">59 days</td>
+</tr>
+<tr class="even">
+<td align="center">hierarchy-order</td>
+<td align="center">1st revision</td>
+<td align="center">2018-07-01</td>
+<td align="center">2018-08-21</td>
+<td align="center">51 days</td>
+</tr>
+<tr class="odd">
+<td align="center">hierarchy-order</td>
+<td align="center">2nd revision</td>
+<td align="center">2018-12-03</td>
+<td align="center">2019-02-23</td>
+<td align="center">82 days</td>
+</tr>
+<tr class="even">
+<td align="center">india-police</td>
+<td align="center">first</td>
+<td align="center">2019-02-04</td>
+<td align="center">2019-06-19</td>
+<td align="center">135 days</td>
+</tr>
+<tr class="odd">
+<td align="center">isis</td>
+<td align="center">first</td>
+<td align="center">2016-07-21</td>
+<td align="center">2016-09-07</td>
+<td align="center">48 days</td>
+</tr>
+<tr class="even">
+<td align="center">isis</td>
+<td align="center">first</td>
+<td align="center">2017-11-14</td>
+<td align="center">2018-02-15</td>
+<td align="center">93 days</td>
+</tr>
+<tr class="odd">
+<td align="center">isis</td>
+<td align="center">1st revision</td>
+<td align="center">2018-06-10</td>
+<td align="center">2018-07-12</td>
+<td align="center">32 days</td>
+</tr>
+<tr class="even">
+<td align="center">isis</td>
+<td align="center">2nd revision</td>
+<td align="center">2018-08-23</td>
+<td align="center">2018-10-03</td>
+<td align="center">41 days</td>
+</tr>
+<tr class="odd">
+<td align="center">peace-conjoint</td>
+<td align="center">first</td>
+<td align="center">2017-10-23</td>
+<td align="center">2018-03-06</td>
+<td align="center">134 days</td>
+</tr>
+<tr class="even">
+<td align="center">peace-conjoint</td>
+<td align="center">1st revision</td>
+<td align="center">2018-04-25</td>
+<td align="center">2018-06-28</td>
+<td align="center">64 days</td>
+</tr>
+<tr class="odd">
+<td align="center">peace-conjoint</td>
+<td align="center">2nd revision</td>
+<td align="center">2018-07-05</td>
+<td align="center">2018-11-01</td>
+<td align="center">119 days</td>
+</tr>
+<tr class="even">
+<td align="center">peace-conjoint</td>
+<td align="center">3rd revision</td>
+<td align="center">2019-01-14</td>
+<td align="center">2019-05-07</td>
+<td align="center">113 days</td>
+</tr>
+<tr class="odd">
+<td align="center">peace-conjoint</td>
+<td align="center">first</td>
+<td align="center">2017-10-08</td>
+<td align="center">2017-10-14</td>
+<td align="center">6 days</td>
+</tr>
+<tr class="even">
+<td align="center">peace-conjoint</td>
+<td align="center">first</td>
+<td align="center">2017-03-07</td>
+<td align="center">2017-06-30</td>
+<td align="center">115 days</td>
+</tr>
+<tr class="odd">
+<td align="center">peace-conjoint</td>
+<td align="center">first</td>
+<td align="center">2017-07-13</td>
+<td align="center">2017-09-17</td>
+<td align="center">66 days</td>
+</tr>
+<tr class="even">
+<td align="center">random-forest</td>
+<td align="center">first</td>
+<td align="center">2016-09-29</td>
+<td align="center">2017-01-04</td>
+<td align="center">97 days</td>
+</tr>
+<tr class="odd">
+<td align="center">random-forest</td>
+<td align="center">first</td>
+<td align="center">2017-02-17</td>
+<td align="center">2017-06-26</td>
+<td align="center">129 days</td>
+</tr>
+<tr class="even">
+<td align="center">road-warrior</td>
+<td align="center">first</td>
+<td align="center">2018-07-12</td>
+<td align="center">2018-12-10</td>
+<td align="center">151 days</td>
+</tr>
+<tr class="odd">
+<td align="center">road-warrior</td>
+<td align="center">first</td>
+<td align="center">2020-04-30</td>
+<td align="center">2020-05-19</td>
+<td align="center">19 days</td>
+</tr>
+<tr class="even">
+<td align="center">scarlet-letter</td>
+<td align="center">first</td>
+<td align="center">2017-11-08</td>
+<td align="center">2018-03-02</td>
+<td align="center">114 days</td>
+</tr>
+<tr class="odd">
+<td align="center">worlds-apart</td>
+<td align="center">first</td>
+<td align="center">2017-05-07</td>
+<td align="center">2017-07-21</td>
+<td align="center">75 days</td>
+</tr>
+<tr class="even">
+<td align="center">worlds-apart</td>
+<td align="center">1st revision</td>
+<td align="center">2017-08-27</td>
+<td align="center">2017-12-30</td>
+<td align="center">125 days</td>
+</tr>
+<tr class="odd">
+<td align="center">worlds-apart</td>
+<td align="center">2nd revision</td>
+<td align="center">2018-01-21</td>
+<td align="center">2018-02-26</td>
+<td align="center">36 days</td>
+</tr>
+<tr class="even">
+<td align="center">worlds-apart</td>
+<td align="center">first</td>
+<td align="center">2017-02-06</td>
+<td align="center">2017-03-23</td>
+<td align="center">45 days</td>
+</tr>
+</tbody>
+</table>
 <div id="the-timeline" class="section level2">
 <h2>The Timeline</h2>
 <p>I’m using the <code>ggalt::geom_dumbbell()</code> geometry to visualize the trajectory of each paper.</p>
