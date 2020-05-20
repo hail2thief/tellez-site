@@ -22,10 +22,10 @@ knitr::opts_chunk$set(echo = TRUE,warning = FALSE,message = FALSE,
 For me, one of the many (so many) sources of stress in graduate school was the fear that I wouldn't have something published by the time the job market came around. At least in my program, there was a strong sense that no publications effectively meant no chance at a job. Now that I'm on the other side of things I know that the process is much more "idiosyncratic" than that.^[At this point I've seen folks with multiple publications, "top-3" publications, records that would put them at 2/3 or more of the way to tenure at many universities -- not get jobs. Little about this process feels fair or systematic.]
 
 
-And yet the worry stands, especially since (overwhelmed, understaffed) academic journals can be very slow to respond to submissions. How long should you expect to wait before finding out if a paper has made it to the Revise & Resubmit stage? 
+And yet the worry stands, especially since (overwhelmed, understaffed) academic journals can be slow to respond to submissions. How long should you expect to wait before finding out if a paper has made it to the Revise & Resubmit stage? 
 
 
-I've been keeping track of my own paper submissions over time^[This data is imperfect. Some of these papers have been submitted more than seen below, but I forgot to log the submission. Oh well!] and thought it would be interesting to visualize the lifecycle of these projects to get a sense of what the publication process looks like.   
+I've been keeping track of my own paper submissions over time^[This data is imperfect. Some of these papers have been submitted more than seen below, but I forgot to log the submission. Oh well!] and thought it would be interesting to visualize the lifecycle of these projects.   
 
 
 ```{r load-libraries,echo=TRUE}
@@ -116,7 +116,7 @@ ggplot(df, aes(x = submit, xend = decision,
 
 
 
-The first, obvious barrier to publication is getting past reviewers in the initial submission stage and to an invitation to revise and resubmit (R&R). One thing that jumps out is how much papers can vary in clearing the initial submission hurdle. Some papers can take a long time to find a home; `dyads` has been submitted to four different journals (actually, I think I'm missing a submission here) without landing an invitation to revise. Other papers, like `hierarchy-order`, landed an R&R on the first try. 
+The first, obvious barrier to publication is getting past reviewers in the initial submission stage and to an invitation to revise and resubmit (R&R). My papers have varied a lot in clearing that initial submission hurdle. Some can take a long time to find a home; `dyads` has been submitted to four different journals (actually, I think I'm missing a submission here) before landing an R&R. Other papers, like `hierarchy-order`, landed an R&R on the first try. 
 
 
 Getting through that first barrier is crucial and the time to decision can vary a lot. In my experience, the median time to decision on a first submission is about `r median(df$duration[df$type == "first"])` days, but can vary a lot: I've waited as long as 270 days (!!) for a response. R&R's are a good deal faster (median = `r median(df$duration[df$type == "1st revision"])`) but also vary. 
@@ -137,17 +137,17 @@ df %>%
 ```
 
 
-Getting to an R&R is only part of the battle: actually *revising* the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With my first publication, `worlds-apart`, I received a rejection from a journal after about 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&R after roughly another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about *4 months* to get a decision back on that R&R. I spent another 20 days or so turning that around, and then the final decision took about a month. 
+Getting to an R&R is only part of the battle: actually *revising* the paper to meet reviewer comments takes time, as does waiting for the journal and reviewers to evaluate your revisions. With my first publication, `worlds-apart`, I received a rejection from a journal after about 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&R after roughly another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about *4 months* to get a decision back on that R&R. I spent another 20 days or so turning that around, and then the final decision took about a month. 
 
 
 
 ## The Tradeoffs
 
 
-These timelines put pressure on graduate students that shapes their work in different ways. Working backwards from a job market that starts in September, I would have needed to submit `worlds-apart` in December of the prior year to have something accepted for publication. But note that this is assuming *the paper lands at the first place I sent it*. If I had sent it to a different journal first and failed there, I would have to add another 2 months or so to that timeline. And getting something R&R'd in two tries is not easy! At some point, this means graduate students might need to be pushing papers out for submission earlier and earlier in graduate school, when most programs assume students are still just learning the ropes.
+These timelines put pressure on graduate students that shapes their writing in different ways. Working backwards from a job market that starts in September, I would have needed to submit `worlds-apart` in December of the prior year to have something accepted for publication by application season. But note that this is assuming *only two tries to an R&R*. If I had sent it to an additional journal first and failed there, I would have to add another 2 months or so to that timeline. And getting something R&R'd in two tries is not easy! At some point, this means graduate students might need to be pushing papers out for submission earlier and earlier in graduate school, when most programs assume students are still just learning the ropes.
 
 
-The other big implication is that students face a big trade-off in terms of ambition of publication venue and having pre-tenure publications. Do you send the paper to the top-3 journal with the miniscule acceptance rates and risk not having anything for the market, or do you send it to a lower-tier journal but miss out on a potential "big hit" that could have big implications for your career down the line? 
+The other big consequence is that students face a trade-off in terms of ambition of publication venue and having pre-tenure publications. Do you send the paper to multiple top journals with miniscule acceptance rates and risk not having anything for the market, or do you send it to a lower-tier journal but miss out on a potential "big hit" that could have big implications for your career down the line? 
 
 
 These pressures and trade-offs are obviously all starker for students who don't come from wealthy families or who have families of their own they need to support. Without a TT job, workshopping a paper for years to boost its chances at a top hit is a tremendous privilege. 
