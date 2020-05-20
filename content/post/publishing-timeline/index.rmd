@@ -111,6 +111,7 @@ ggplot(df, aes(x = submit, xend = decision,
   ggrepel::geom_label_repel(nudge_y = -.5, show.legend = FALSE) + 
   theme(legend.position = 'top') + 
   NULL
+ggsave("featured.png", width = 10, height = 8)
 ```
 
 [![](featured.png)](featured.png)
