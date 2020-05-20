@@ -7,9 +7,9 @@ authors:
 tags:
 categories: []
 date: "2020-05-10"
-lastmod: "19 May, 2020"
+lastmod: "20 May, 2020"
 featured: false
-draft: true
+draft: false
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
@@ -88,7 +88,7 @@ df = tribble(
   ggrepel::geom_label_repel(nudge_y = -.5, show.legend = FALSE) + 
   theme(legend.position = &#39;top&#39;) + 
   NULL</code></pre>
-<p><img src="/post/publishing-timeline/index_files/figure-html/dumbbell-1.png" width="960" /></p>
+<p><a href="featured.png"><img src="featured.png" /></a></p>
 <p>The first, obvious barrier to publication is getting past reviewers in the initial submission stage and to an invitation to revise and resubmit (R&amp;R). One thing that jumps out is how much papers can vary in clearing the initial submission hurdle. Some papers can take a long time to find a home; <code>dyads</code> has been submitted to four different journals (actually, I think I’m missing a submission here) without landing an invitation to revise. Other papers, like <code>hierarchy-order</code>, landed an R&amp;R on the first try.</p>
 <p>Getting through that first barrier is crucial and the time to decision can vary a lot. In my experience, the median time to decision on a first submission is about 90 days, but can vary a lot: I’ve waited as long as 270 days (!!) for a response. R&amp;R’s are a good deal faster (median = 57.5) but also vary.</p>
 <pre class="r"><code>df %&gt;% 
@@ -102,7 +102,7 @@ df = tribble(
        title = &quot;Waiting to Hear Back from Journals&quot;, 
        subtitle = &quot;Number of days between submitting a paper and hearing back at each stage of publication process.&quot;)</code></pre>
 <p><img src="/post/publishing-timeline/index_files/figure-html/ridges-1.png" width="960" /></p>
-<p>Getting to an R&amp;R is only part of the battle: actually <em>revising</em> the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With <code>worlds-apart</code>, my first publication, I got a rejection from the first journal I tried after 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&amp;R after about another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about <em>4 months</em> to get a decision back on that R&amp;R. I spent another 20 days or so turning that around, and then the final decision took about a month.</p>
+<p>Getting to an R&amp;R is only part of the battle: actually <em>revising</em> the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With my first publication, <code>worlds-apart</code>, I received a rejection from a journal after about 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&amp;R after roughly another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about <em>4 months</em> to get a decision back on that R&amp;R. I spent another 20 days or so turning that around, and then the final decision took about a month.</p>
 </div>
 <div id="the-tradeoffs" class="section level2">
 <h2>The Tradeoffs</h2>

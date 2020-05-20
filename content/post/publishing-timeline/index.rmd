@@ -9,7 +9,7 @@ categories: []
 date: "2020-05-10"
 lastmod: "`r format(Sys.time(), '%d %B, %Y')`"
 featured: false
-draft: true
+draft: false
 ---
 
 ```{r setup, include=FALSE}
@@ -97,7 +97,7 @@ df = tribble(
 
 I'm using the `ggalt::geom_dumbbell()` geometry to visualize the trajectory of each paper. 
 
-```{r dumbbell}
+```{r dumbbell, eval=FALSE}
 ggplot(df, aes(x = submit, xend = decision, 
              y = paper, label = duration, 
              color = type)) + 
@@ -111,6 +111,8 @@ ggplot(df, aes(x = submit, xend = decision,
   theme(legend.position = 'top') + 
   NULL
 ```
+
+[![](featured.png)](featured.png)
 
 
 
@@ -135,7 +137,7 @@ df %>%
 ```
 
 
-Getting to an R&R is only part of the battle: actually *revising* the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With `worlds-apart`, my first publication, I got a rejection from the first journal I tried after 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&R after about another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about *4 months* to get a decision back on that R&R. I spent another 20 days or so turning that around, and then the final decision took about a month. 
+Getting to an R&R is only part of the battle: actually *revising* the paper to meet reviewer comments takes time, as does the time the journal and reviewers spend evaluating your revisions. With my first publication, `worlds-apart`, I received a rejection from a journal after about 45 days. I spent about a month and a half making revisions based on reviewer comments, then sent it out again to a new journal where I got an R&R after roughly another 45 days. It took me about a month to do the revisions (this was August, before start of school, plenty of free time), but then I had to wait about *4 months* to get a decision back on that R&R. I spent another 20 days or so turning that around, and then the final decision took about a month. 
 
 
 
@@ -157,6 +159,5 @@ My main advice to graduate students on this front would be to pursue co-author o
 
 
 But these are just my two cents. 
-
 
 
