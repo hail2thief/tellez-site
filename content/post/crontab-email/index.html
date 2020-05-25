@@ -1,0 +1,34 @@
+---
+title: 'Automating emails with R + crontab'
+summary: Walkthrough of setting up recurring emails using R and crontab. 
+authors:
+- admin
+tags:
+categories: []
+date: "2020-05-25"
+lastmod: "25 May, 2020"
+featured: false
+draft: true
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>To keep track of the spread of Coronavirus on campus, my employer has asked every faculty person to provide a <em>daily</em> report of health-status via email. Yes, this means sending an email every day saying “I’m still healthy!” to a designated faculty member in the department, who must then verify everyone has responded that day and hunt down those who haven’t.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Having to send these daily emails made me go back and re-learn something I had tackled long-ago but forgotten: how to set up my computer to automatically run an R script at a scheduled date/time.</p>
+<p>I originally did this in graduate school to scrape millions of tweets at given time intervals in the run-up to the <a href="https://en.wikipedia.org/wiki/2016_Colombian_peace_agreement_referendum">October 2016 Colombian “peace” referendum</a>. The result was a lot of data and this cute graph that I haven’t been able to publish anywhere.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p><img src="TwitterNegotiationsNetwork.png" /></p>
+<p>So, here’s the set-up for the recurring email problem using <code>R</code> and <code>crontab</code>, but you can easily adapt the solution to other needs.</p>
+<div id="step-1-sending-emails" class="section level2">
+<h2>Step 1: Sending Emails</h2>
+<p>Sending emails with R is made easy by the <code>gmailr</code> package.</p>
+</div>
+<div id="step-2-recurring-tasks-with-crontab" class="section level2">
+<h2>Step 2: Recurring Tasks with Crontab</h2>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If this sounds inefficient to you, you are right.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Reviewer consensus seems to be: “nice, but I don’t see what it adds to the paper”. They are probably right.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
