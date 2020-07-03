@@ -1,0 +1,229 @@
+---
+title: 'Using PRIO-GRID Data in R'
+summary: Walkthrough of using spatial data packages in R with the PRIO-GRID data.
+authors:
+- admin
+tags:
+categories: []
+date: "2020-07-03"
+lastmod: "`r format(Sys.time(), '%d %B, %Y')`"
+featured: false
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
+```
+
+
+
+
+# Introduction
+
+
+## Using R for Spatial Data
+
+There are two main packages for dealing with spatial data in R:
+
+- `spdep`: older, richer set of functions, not-tidy
+- `sf`: newer, fewer functions, tidy and beautiful
+
+
+I would rather only use `sf`, but there are some nice functions in `spdep` we'll need to use in this example that I'm not sure I can replicate in `sf`. 
+
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(sf)
+library(spdep)
+library(vroom)
+theme_set(theme_minimal())
+```
+
+
+First, we read the shape files into R using `st_read`. For some reason, the function call separates the file path into the folder the shape file is in (`dsn`), and then the shape file itself (`layer`). 
+
+```{r read-data, cache=TRUE}
+# read data
+prio = st_read(dsn = "../../../../../data/priogrid_cellshp", 
+                layer = "priogrid_cell", 
+                stringsAsFactors = F) %>% 
+  mutate(gid = as.character(gid))
+```
+
+Let's look at the data:
+
+```{r}
+prio %>% 
+  head()
+```
+
+This is where `sf` really shines. As you can see, the data is just a `tibble`, with the spatial polygons stored as a column of lists in `geometry`. What this does is foreground the stuff you care about (i.e., the unit level characteristics, such as covariates, and outcomes) and sticks the stuff you mostly use for plotting and other stuff in that last column. 
+
+
+Compare this to what you get from `rgdal::readOGR`, which is a clunky "SpatialPolygonsDataFrame" class object that is also slower to work with. 
+
+
+## Getting Rid of the Water
+
+The PRIO-GRID data is **huge** because it covers the whole globe. This makes it harder to work with, especially once you are trying to do any kind of modeling. One way to make the data more manageable is to just focus on one region of the globe (e.g., Africa), or, as I will show here, just get rid of all the water. 
+
+Yes, the PRIO-GRID includes all of the world's oceans, which means who-knows-how-many grids that you have no use for (I guess unless you are maybe studying maritime conflict?). Unfortunately, the PRIO-GRID data (at time of writing) does not include a simple way to distinguish grids based on whether or not they are water or land. 
+
+
+The solution below, does the following: 
+
+- Merge in the *yearly* PRIO-GRID variables, for which we have the `gid` ID variable *and* the Gleditsch and Ward country codes (`gwno`). 
+- Any grid without a `gwno` is water, so we drop it
+
+```{r prio-year}
+
+# read in PRIO yearly data
+prio_year = 
+  # just want gid and gwno to identify water
+  vroom("../../../../../data/priogrid_cellshp/prio-grid-yearly.csv", 
+        col_select = c("gid", "gwno", "year", "pop_gpw_sum")) %>% 
+  # we got multipe years of data and changing country, 
+  # so i'm arbitrarily picking all countries in most recent year
+  filter(year == 2005) %>% 
+  mutate(gid = as.character(gid)) %>% 
+  select(-year)
+
+
+# merge in gwno to identify country grids
+prio = left_join(prio, prio_year)
+head(prio)
+```
+
+
+With the `gwno` identifier merged in, we can now identify land/water and even subset to specific countries or sets of countries. The `sf` package also works nicely with `ggplot`. For instance, here's GRID-level population in Venezuela, below: 
+
+```{r}
+# plot Venezuela as sanity check
+prio %>%
+  filter(gwno == 101) %>% 
+  #mutate(pop_cut = cut_number(pop_gpw_sum, 10)) %>% 
+  ggplot(aes(fill = pop_gpw_sum)) + 
+  geom_sf() + 
+  scale_fill_viridis_c(option = "inferno", 
+                       end = .9, 
+                       trans = "log10", 
+                       labels = scales::comma, 
+                       name = "") + 
+  labs(title = "GRID-level population in Venezuela")
+```
+
+
+We can also drop all the water, as promised: 
+
+```{r}
+## throw out water tiles: places with no gwno == not countries
+prio_land = 
+  prio %>% 
+  drop_na(gwno)
+```
+
+We're now down to a dataset that is 25% of its original size, which will help a lot down the road. 
+
+
+## Finding Neighbors
+
+
+Doing most kinds of spatial analysis requires knowning how the different units in your data relate to one another. With spatial data, it's common to look at whether two units are *neighbors* or not. Being a neighbor might be defined as sharing a common border, the distances between the capitals, or centroids, or... whatever.^[Actually, the often arbitrary nature of this choice is one of the tricky aspects of spatial modeling.]
+
+
+To describe these relationships, we use an *N* by *N* **adjacency matrix**, where *N* is the number of units in our data and any entry *(i,j)* tells us whether units *i* and *j* are neighbors or not. 
+
+
+To do this in R, I find the easiest thing is (unfortunately) to switch from `sf` to `spdep` package and use the `spdep::poly2nb()` function. Below, we specify `queen == FALSE` because we want to use Rook's contiguity (as opposed to Queen's). You should look into the difference between these two (also, perhaps, another arbitrary decision point). Note that this step takes *a long time*. 
+
+
+```{r, eval=FALSE}
+
+# convert back to sp object to use nice sp dep functions
+prio_land_sp = as(prio_land, Class = "Spatial")
+
+# get neighbors
+nb = poly2nb(prio_land_sp, 
+             queen = FALSE, 
+             row.names = prio_land_sp$gid)
+```
+
+
+The output of our `nb` object looks like this, and tells us a bunch of information about what neighborhood relations among our units looks like, including whether any units were found to have no neighbors:
+
+```{r}
+load("../../../static/nb.rda")
+nb
+```
+
+
+
+### Doing this with sf package
+
+
+There's actually a way to do this without leaving `sf`, though I found it on a Github comment thread, and without digging more into it am not sure how robust it is (though it does pass general sniff test). 
+
+
+```{r, eval=FALSE}
+# let's do this again, but with sf package; faster, but seems dodgier, based off a github comment:
+# https://github.com/r-spatial/sf/issues/234
+st_rook = function(a, b = a) st_relate(a, b, pattern = "F***1****")
+prio_land = prio_land %>% mutate(NB_ROOK = st_rook(.))
+```
+
+
+## Checking things turned out alright
+
+
+Something prudent at this point would be to check whether the neighborhood list we got actually makes sense. 
+
+First, let's look at a place that the `nb` object tells us has no neighbors:
+
+```{r}
+# plot place with no neighbors, Alaskan island
+prio_land %>% 
+  filter(gwno == 2) %>% 
+  ggplot() + 
+  geom_sf() + 
+  # add the place with no neighbors
+  geom_sf(data = filter(prio_land, gid == 211700), fill = "red") + 
+  # zoom in on location
+  coord_sf(xlim = c(-180, -140), ylim = c(50, 70), expand = FALSE)
+```
+
+Checks out: looks like some tiny Alaskan island that *shouldn't* have neighbors. 
+
+
+
+Now, how about a place that should have neighbors? Maybe a random place in Canada. 
+
+
+```{r}
+# plot place and its neighbors (in canada) # CHECKS OUT!
+prio_land %>% 
+  filter(gwno == 20) %>% 
+  ggplot() + geom_sf() + 
+  # random place in canada
+  geom_sf(data = filter(prio_land, gid == 249328), fill = "red") + 
+  # neighbors from nb object
+  geom_sf(data = filter(prio_land, gid %in% c(249329,249327, 248608)), fill = "blue") + 
+  # zoom in on location
+  coord_sf(xlim = c(-100, -50), ylim = c(75, 85), expand = FALSE)
+  
+```
+
+A bit hard to make out, but if you zoom in you will see that the `nb` object correctly identified this GRID's neighbors. 
+
+
+## Spatial Analysis
+
+
+```{r}
+# store as list (most modeling packages require this)
+lw = nb2listw(nb, style = "W", zero.policy = TRUE)
+# print(lw, zero.policy = TRUE) ## to look at lw contents
+```
+
+
+
