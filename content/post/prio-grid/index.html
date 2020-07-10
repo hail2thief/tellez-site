@@ -25,8 +25,8 @@ draft: false
 <li><code>Yearly variables</code>: data at the cell-level that changes over time (e.g., rain, population, etc.)</li>
 </ol>
 <p>Interacting with the shapefiles will require some specific R packages.</p>
-<div id="using-r-for-spatial-data" class="section level2">
-<h2>Using R for Spatial Data</h2>
+<div id="r-for-spatial-data" class="section level2">
+<h2>R for Spatial Data</h2>
 <p>There are two main packages for dealing with spatial data in R:</p>
 <ul>
 <li><code>spdep</code>: older, richer set of functions, not-tidy</li>
@@ -178,8 +178,8 @@ prio_land %&gt;%
 <p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>A bit hard to make out, but if you zoom in you will see that the <code>nb</code> object correctly identified this GRID’s neighbors.</p>
 </div>
-<div id="spatial-analysis" class="section level2">
-<h2>Spatial Analysis</h2>
+<div id="autocorrelation" class="section level2">
+<h2>Autocorrelation</h2>
 <p>Having an adjacency matrix of relations between units opens up possibilities for fitting different kinds of spatial models to your data. A common first step is to test whether the variable you are interested in exhibits a high degree of spatial clustering, or “autocorrelation”, which has implications for what kind of model you <em>should</em> fit to your data.</p>
 <p>The first step is converting our <code>nb</code> object to a list using <code>nblistw()</code>. We include <code>zero.policy = TRUE</code> because there are a few unconnected cells in our data. The <code>style</code> argument is important here: it defines how you <em>weigh</em> the connections in your data. A common approach is to row-standardize the adjacency matrix using <code>style = "W"</code>. The strength of this approach vs. others is another decision-point in spatial analysis.</p>
 <pre class="r"><code># store as list (most modeling packages require this)

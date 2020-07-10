@@ -33,7 +33,7 @@ The data come in three flavors:
 
 Interacting with the shapefiles will require some specific R packages. 
 
-## Using R for Spatial Data
+## R for Spatial Data
 
 There are two main packages for dealing with spatial data in R:
 
@@ -235,7 +235,7 @@ prio_land %>%
 A bit hard to make out, but if you zoom in you will see that the `nb` object correctly identified this GRID's neighbors. 
 
 
-## Spatial Analysis
+## Autocorrelation
 
 
 Having an adjacency matrix of relations between units opens up possibilities for fitting different kinds of spatial models to your data. A common first step is to test whether the variable you are interested in exhibits a high degree of spatial clustering, or "autocorrelation", which has implications for what kind of model you *should* fit to your data. 
