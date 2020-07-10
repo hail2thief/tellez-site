@@ -1,14 +1,15 @@
 ---
-title: 'Using PRIO-GRID Data in R'
-summary: Walkthrough of using spatial data packages in R with the PRIO-GRID data.
+title: 'Using PRIO-GRID in R'
+subtitle: Walkthrough for using the PRIO-GRID data in R.
+summary: Walkthrough for using the PRIO-GRID data in R.
 authors:
 - admin
 tags:
 categories: []
 date: "2020-07-03"
-lastmod: "03 July, 2020"
+lastmod: "10 July, 2020"
 featured: false
-draft: true
+draft: false
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
@@ -16,6 +17,14 @@ draft: true
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
+<p>I’ve started working on a new project that relies on the <a href="https://grid.prio.org/#/about">PRIO-GRID</a> data, a truly unique and kinda mind-boggling effort to systematize spatial data analysis. Basically, PRIO-GRID breaks up the Earth into a grid of little squares, or cells, each of which is 0.5 x 0.5 decimal degrees (roughly 50 x 50 km at the equator; you can read more about the data <a href="https://journals.sagepub.com/doi/full/10.1177/0022343311431287">here</a>). They then conformed a wide variety of available spatial data to this grid system, giving you access to things like the population of each 50 x 50 km square everywhere in the globe. Very cool.</p>
+<p>The data come in three flavors:</p>
+<ol style="list-style-type: decimal">
+<li><code>Shapefiles</code>: information for plotting and doing spatial analysis on the grid system</li>
+<li><code>Static variables</code>: data at the cell-level on stuff that doesn’t change (e.g., how mountainous that cell is)</li>
+<li><code>Yearly variables</code>: data at the cell-level that changes over time (e.g., rain, population, etc.)</li>
+</ol>
+<p>Interacting with the shapefiles will require some specific R packages.</p>
 <div id="using-r-for-spatial-data" class="section level2">
 <h2>Using R for Spatial Data</h2>
 <p>There are two main packages for dealing with spatial data in R:</p>
@@ -52,17 +61,13 @@ prio = st_read(dsn = &quot;../../../../../data/priogrid_cellshp&quot;,
 ## 5 259172 165.75  89.75 692 360 POLYGON ((165.5 89.5, 165.5...
 ## 6 259173 166.25  89.75 693 360 POLYGON ((166 89.5, 166 90,...</code></pre>
 <p>This is where <code>sf</code> really shines. As you can see, the data is just a <code>tibble</code>, with the spatial polygons stored as a column of lists in <code>geometry</code>. What this does is foreground the stuff you care about (i.e., the unit level characteristics, such as covariates, and outcomes) and sticks the stuff you mostly use for plotting and other stuff in that last column.</p>
-<p>Compare this to what you get from <code>rgdal::readOGR</code>, which is a clunky “SpatialPolygonsDataFrame” class object that is also slower to work with.</p>
+<p>Compare this to what you get from <code>rgdal::readOGR</code>, which is a “SpatialPolygonsDataFrame” class object that is also slower to work with.</p>
+<p>The PRIO-GRID data is <strong>huge</strong> because it covers the whole globe. This makes it harder to work with, especially once you are trying to do any kind of modeling. One way to make the data more manageable is to just focus on one region of the globe (e.g., Africa), or, as I will show here, just get rid of all the water.</p>
 </div>
 <div id="getting-rid-of-the-water" class="section level2">
 <h2>Getting Rid of the Water</h2>
-<p>The PRIO-GRID data is <strong>huge</strong> because it covers the whole globe. This makes it harder to work with, especially once you are trying to do any kind of modeling. One way to make the data more manageable is to just focus on one region of the globe (e.g., Africa), or, as I will show here, just get rid of all the water.</p>
 <p>Yes, the PRIO-GRID includes all of the world’s oceans, which means who-knows-how-many grids that you have no use for (I guess unless you are maybe studying maritime conflict?). Unfortunately, the PRIO-GRID data (at time of writing) does not include a simple way to distinguish grids based on whether or not they are water or land.</p>
-<p>The solution below, does the following:</p>
-<ul>
-<li>Merge in the <em>yearly</em> PRIO-GRID variables, for which we have the <code>gid</code> ID variable <em>and</em> the Gleditsch and Ward country codes (<code>gwno</code>).</li>
-<li>Any grid without a <code>gwno</code> is water, so we drop it</li>
-</ul>
+<p>One quick way to exclude irrelevant cells is to merge in the <em>yearly</em> PRIO-GRID variables on <code>gid</code>, and use the Gleditch and Gleditsch and Ward country codes (<code>gwno</code>) to identify what country each cell belongs to. Any cell without a <code>gwno</code> is water, so we drop it.</p>
 <pre class="r"><code># read in PRIO yearly data
 prio_year = 
   # just want gid and gwno to identify water
@@ -90,7 +95,7 @@ head(prio)</code></pre>
 ## 4 259171 165.25  89.75 691 360   NA          NA POLYGON ((165 89.5, 165 90,...
 ## 5 259172 165.75  89.75 692 360   NA          NA POLYGON ((165.5 89.5, 165.5...
 ## 6 259173 166.25  89.75 693 360   NA          NA POLYGON ((166 89.5, 166 90,...</code></pre>
-<p>With the <code>gwno</code> identifier merged in, we can now identify land/water and even subset to specific countries or sets of countries. The <code>sf</code> package also works nicely with <code>ggplot</code>. For instance, here’s GRID-level population in Venezuela, below:</p>
+<p>With the <code>gwno</code> identifier merged in, we can now identify land/water and even subset to specific countries or sets of countries. Note that I also merged in a population estimate for plotting below. The <code>sf</code> package also works nicely with <code>ggplot</code>. For instance, here’s GRID-level population in Venezuela, below:</p>
 <pre class="r"><code># plot Venezuela as sanity check
 prio %&gt;%
   filter(gwno == 101) %&gt;% 
@@ -102,8 +107,10 @@ prio %&gt;%
                        trans = &quot;log10&quot;, 
                        labels = scales::comma, 
                        name = &quot;&quot;) + 
-  labs(title = &quot;GRID-level population in Venezuela&quot;)</code></pre>
+  labs(title = &quot;GRID-level population in Venezuela&quot;) + 
+  theme(panel.grid.major = element_blank())</code></pre>
 <p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(filename = &quot;featured.png&quot;, device = &quot;png&quot;)</code></pre>
 <p>We can also drop all the water, as promised:</p>
 <pre class="r"><code>## throw out water tiles: places with no gwno == not countries
 prio_land = 
@@ -113,13 +120,13 @@ prio_land =
 </div>
 <div id="finding-neighbors" class="section level2">
 <h2>Finding Neighbors</h2>
-<p>Doing most kinds of spatial analysis requires knowning how the different units in your data relate to one another. With spatial data, it’s common to look at whether two units are <em>neighbors</em> or not. Being a neighbor might be defined as sharing a common border, the distances between the capitals, or centroids, or… whatever.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>Doing most kinds of spatial analysis requires knowning how the different units in your data relate to one another. With spatial data, it’s common to look at whether two units are <em>neighbors</em> or not. Being a neighbor might be defined as sharing a common border, the distances between the capitals, or centroids, or… whatever. The often arbitrary nature of this choice is one of the tricky aspects of spatial modeling.</p>
 <p>To describe these relationships, we use an <em>N</em> by <em>N</em> <strong>adjacency matrix</strong>, where <em>N</em> is the number of units in our data and any entry <em>(i,j)</em> tells us whether units <em>i</em> and <em>j</em> are neighbors or not.</p>
-<p>To do this in R, I find the easiest thing is (unfortunately) to switch from <code>sf</code> to <code>spdep</code> package and use the <code>spdep::poly2nb()</code> function. Below, we specify <code>queen == FALSE</code> because we want to use Rook’s contiguity (as opposed to Queen’s). You should look into the difference between these two (also, perhaps, another arbitrary decision point). Note that this step takes <em>a long time</em>.</p>
+<p>To do this in R, I find the easiest thing is (unfortunately) to switch from <code>sf</code> to <code>spdep</code> package and use the <code>spdep::poly2nb()</code> function.</p>
 <pre class="r"><code># convert back to sp object to use nice sp dep functions
-prio_land_sp = as(prio_land, Class = &quot;Spatial&quot;)
-
-# get neighbors
+prio_land_sp = as(prio_land, Class = &quot;Spatial&quot;)</code></pre>
+<p>Below, we specify <code>queen == FALSE</code> because we want to use Rook’s contiguity (as opposed to Queen’s). You should look into the difference between these two (also, perhaps, another arbitrary decision point). Note that this step takes <em>a long time</em>.</p>
+<pre class="r"><code># get neighbors
 nb = poly2nb(prio_land_sp, 
              queen = FALSE, 
              row.names = prio_land_sp$gid)</code></pre>
@@ -155,9 +162,9 @@ prio_land %&gt;%
   geom_sf(data = filter(prio_land, gid == 211700), fill = &quot;red&quot;) + 
   # zoom in on location
   coord_sf(xlim = c(-180, -140), ylim = c(50, 70), expand = FALSE)</code></pre>
-<p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Checks out: looks like some tiny Alaskan island that <em>shouldn’t</em> have neighbors.</p>
-<p>Now, how about a place that should have neighbors? Maybe a random place in Canada.</p>
+<p>Now, how about a place that should have neighbors? Let’s look at a random cell in Canada:</p>
 <pre class="r"><code># plot place and its neighbors (in canada) # CHECKS OUT!
 prio_land %&gt;% 
   filter(gwno == 20) %&gt;% 
@@ -168,19 +175,47 @@ prio_land %&gt;%
   geom_sf(data = filter(prio_land, gid %in% c(249329,249327, 248608)), fill = &quot;blue&quot;) + 
   # zoom in on location
   coord_sf(xlim = c(-100, -50), ylim = c(75, 85), expand = FALSE)</code></pre>
-<p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/prio-grid/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>A bit hard to make out, but if you zoom in you will see that the <code>nb</code> object correctly identified this GRID’s neighbors.</p>
 </div>
 <div id="spatial-analysis" class="section level2">
 <h2>Spatial Analysis</h2>
+<p>Having an adjacency matrix of relations between units opens up possibilities for fitting different kinds of spatial models to your data. A common first step is to test whether the variable you are interested in exhibits a high degree of spatial clustering, or “autocorrelation”, which has implications for what kind of model you <em>should</em> fit to your data.</p>
+<p>The first step is converting our <code>nb</code> object to a list using <code>nblistw()</code>. We include <code>zero.policy = TRUE</code> because there are a few unconnected cells in our data. The <code>style</code> argument is important here: it defines how you <em>weigh</em> the connections in your data. A common approach is to row-standardize the adjacency matrix using <code>style = "W"</code>. The strength of this approach vs. others is another decision-point in spatial analysis.</p>
 <pre class="r"><code># store as list (most modeling packages require this)
 lw = nb2listw(nb, style = &quot;W&quot;, zero.policy = TRUE)
-# print(lw, zero.policy = TRUE) ## to look at lw contents</code></pre>
+print(lw, zero.policy = TRUE) ## to look at lw contents</code></pre>
+<pre><code>## Characteristics of weights list object:
+## Neighbour list object:
+## Number of regions: 64818 
+## Number of nonzero links: 249856 
+## Percentage nonzero weights: 0.005947008 
+## Average number of links: 3.854732 
+## 39 regions with no links:
+## 211700 209569 165491 154315 147345 146125 144700 144508 143252 143106 142536 141627 140378 140383 140186 139637 138217 137308 133811 132987 132268 132135 131746 127298 122245 121546 120953 120955 119518 119418 114426 113014 105121 101287 100780 98650 90142 62356 58318
+## 
+## Weights style: W 
+## Weights constants summary:
+##       n         nn    S0      S1       S2
+## W 64779 4196318841 64779 34305.1 260102.1</code></pre>
+<p>A common test of spatial autocorrelation is the Moran’s I test, which can be implemented with the <code>spdep::morant.test()</code> function. Below, we test whether there is spatial autocorrelation in population:</p>
+<pre class="r"><code>moran.test(prio_land_sp$pop_gpw_sum, listw = lw, zero.policy = TRUE)</code></pre>
+<pre><code>## 
+##  Moran I test under randomisation
+## 
+## data:  prio_land_sp$pop_gpw_sum  
+## weights: lw  n reduced by no-neighbour observations
+##   
+## 
+## Moran I statistic standard deviate = 212.41, p-value &lt; 2.2e-16
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##      6.055005e-01     -1.543734e-05      8.126835e-06</code></pre>
+<p>There’s clearly strong autocrrelation (.61) which is statistically significant (p-value is basically zero). You can also apply the Moran’s I test to a vanilla model you’ve already fit as a test of whether a spatial econometric model would be more appropriate.</p>
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Actually, the often arbitrary nature of this choice is one of the tricky aspects of spatial modeling.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>That’s just the tip of the iceberg but a good place to get started. Big thanks to <a href="https://jayrobwilliams.com/">Rob Williams</a> and <a href="https://sites.duke.edu/jeremyspringman/">Jeremy Springman</a> for help getting me started!</p>
 </div>

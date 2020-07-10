@@ -1,6 +1,7 @@
 ---
-title: 'Using PRIO-GRID Data in R'
-summary: Walkthrough of using spatial data packages in R with the PRIO-GRID data.
+title: 'Using PRIO-GRID in R'
+subtitle: Walkthrough for using the PRIO-GRID data in R.
+summary: Walkthrough for using the PRIO-GRID data in R.
 authors:
 - admin
 tags:
@@ -8,7 +9,7 @@ categories: []
 date: "2020-07-03"
 lastmod: "`r format(Sys.time(), '%d %B, %Y')`"
 featured: false
-draft: true
+draft: false
 ---
 
 ```{r setup, include=FALSE}
@@ -20,6 +21,17 @@ knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
 
 # Introduction
 
+
+I've started working on a new project that relies on the [PRIO-GRID](https://grid.prio.org/#/about) data, a truly unique and kinda mind-boggling effort to systematize spatial data analysis. Basically, PRIO-GRID breaks up the Earth into a grid of little squares, or cells, each of which is 0.5 x 0.5 decimal degrees (roughly 50 x 50 km at the equator; you can read more about the data [here](https://journals.sagepub.com/doi/full/10.1177/0022343311431287)). They then conformed a wide variety of available spatial data to this grid system, giving you access to things like the population of each 50 x 50 km square everywhere in the globe. Very cool. 
+
+
+The data come in three flavors: 
+
+1. `Shapefiles`: information for plotting and doing spatial analysis on the grid system
+2. `Static variables`: data at the cell-level on stuff that doesn't change (e.g., how mountainous that cell is)
+3. `Yearly variables`: data at the cell-level that changes over time (e.g., rain, population, etc.)
+
+Interacting with the shapefiles will require some specific R packages. 
 
 ## Using R for Spatial Data
 
@@ -43,6 +55,7 @@ theme_set(theme_minimal())
 
 First, we read the shape files into R using `st_read`. For some reason, the function call separates the file path into the folder the shape file is in (`dsn`), and then the shape file itself (`layer`). 
 
+
 ```{r read-data, cache=TRUE}
 # read data
 prio = st_read(dsn = "../../../../../data/priogrid_cellshp", 
@@ -61,20 +74,20 @@ prio %>%
 This is where `sf` really shines. As you can see, the data is just a `tibble`, with the spatial polygons stored as a column of lists in `geometry`. What this does is foreground the stuff you care about (i.e., the unit level characteristics, such as covariates, and outcomes) and sticks the stuff you mostly use for plotting and other stuff in that last column. 
 
 
-Compare this to what you get from `rgdal::readOGR`, which is a clunky "SpatialPolygonsDataFrame" class object that is also slower to work with. 
+Compare this to what you get from `rgdal::readOGR`, which is a "SpatialPolygonsDataFrame" class object that is also slower to work with. 
+
+
+The PRIO-GRID data is **huge** because it covers the whole globe. This makes it harder to work with, especially once you are trying to do any kind of modeling. One way to make the data more manageable is to just focus on one region of the globe (e.g., Africa), or, as I will show here, just get rid of all the water. 
 
 
 ## Getting Rid of the Water
 
-The PRIO-GRID data is **huge** because it covers the whole globe. This makes it harder to work with, especially once you are trying to do any kind of modeling. One way to make the data more manageable is to just focus on one region of the globe (e.g., Africa), or, as I will show here, just get rid of all the water. 
 
 Yes, the PRIO-GRID includes all of the world's oceans, which means who-knows-how-many grids that you have no use for (I guess unless you are maybe studying maritime conflict?). Unfortunately, the PRIO-GRID data (at time of writing) does not include a simple way to distinguish grids based on whether or not they are water or land. 
 
 
-The solution below, does the following: 
+One quick way to exclude irrelevant cells is to merge in the *yearly* PRIO-GRID variables on `gid`, and use the Gleditch and Gleditsch and Ward country codes (`gwno`) to identify what country each cell belongs to. Any cell without a `gwno` is water, so we drop it. 
 
-- Merge in the *yearly* PRIO-GRID variables, for which we have the `gid` ID variable *and* the Gleditsch and Ward country codes (`gwno`). 
-- Any grid without a `gwno` is water, so we drop it
 
 ```{r prio-year}
 
@@ -96,7 +109,7 @@ head(prio)
 ```
 
 
-With the `gwno` identifier merged in, we can now identify land/water and even subset to specific countries or sets of countries. The `sf` package also works nicely with `ggplot`. For instance, here's GRID-level population in Venezuela, below: 
+With the `gwno` identifier merged in, we can now identify land/water and even subset to specific countries or sets of countries. Note that I also merged in a population estimate for plotting below. The `sf` package also works nicely with `ggplot`. For instance, here's GRID-level population in Venezuela, below: 
 
 ```{r}
 # plot Venezuela as sanity check
@@ -110,7 +123,9 @@ prio %>%
                        trans = "log10", 
                        labels = scales::comma, 
                        name = "") + 
-  labs(title = "GRID-level population in Venezuela")
+  labs(title = "GRID-level population in Venezuela") + 
+  theme(panel.grid.major = element_blank())
+ggsave(filename = "featured.png", device = "png")
 ```
 
 
@@ -129,20 +144,24 @@ We're now down to a dataset that is 25% of its original size, which will help a 
 ## Finding Neighbors
 
 
-Doing most kinds of spatial analysis requires knowning how the different units in your data relate to one another. With spatial data, it's common to look at whether two units are *neighbors* or not. Being a neighbor might be defined as sharing a common border, the distances between the capitals, or centroids, or... whatever.^[Actually, the often arbitrary nature of this choice is one of the tricky aspects of spatial modeling.]
+Doing most kinds of spatial analysis requires knowning how the different units in your data relate to one another. With spatial data, it's common to look at whether two units are *neighbors* or not. Being a neighbor might be defined as sharing a common border, the distances between the capitals, or centroids, or... whatever. The often arbitrary nature of this choice is one of the tricky aspects of spatial modeling.
 
 
 To describe these relationships, we use an *N* by *N* **adjacency matrix**, where *N* is the number of units in our data and any entry *(i,j)* tells us whether units *i* and *j* are neighbors or not. 
 
+To do this in R, I find the easiest thing is (unfortunately) to switch from `sf` to `spdep` package and use the `spdep::poly2nb()` function. 
 
-To do this in R, I find the easiest thing is (unfortunately) to switch from `sf` to `spdep` package and use the `spdep::poly2nb()` function. Below, we specify `queen == FALSE` because we want to use Rook's contiguity (as opposed to Queen's). You should look into the difference between these two (also, perhaps, another arbitrary decision point). Note that this step takes *a long time*. 
+```{r, cache=TRUE}
+# convert back to sp object to use nice sp dep functions
+prio_land_sp = as(prio_land, Class = "Spatial")
+```
+
+
+
+Below, we specify `queen == FALSE` because we want to use Rook's contiguity (as opposed to Queen's). You should look into the difference between these two (also, perhaps, another arbitrary decision point). Note that this step takes *a long time*. 
 
 
 ```{r, eval=FALSE}
-
-# convert back to sp object to use nice sp dep functions
-prio_land_sp = as(prio_land, Class = "Spatial")
-
 # get neighbors
 nb = poly2nb(prio_land_sp, 
              queen = FALSE, 
@@ -196,7 +215,7 @@ Checks out: looks like some tiny Alaskan island that *shouldn't* have neighbors.
 
 
 
-Now, how about a place that should have neighbors? Maybe a random place in Canada. 
+Now, how about a place that should have neighbors? Let's look at a random cell in Canada: 
 
 
 ```{r}
@@ -219,11 +238,28 @@ A bit hard to make out, but if you zoom in you will see that the `nb` object cor
 ## Spatial Analysis
 
 
+Having an adjacency matrix of relations between units opens up possibilities for fitting different kinds of spatial models to your data. A common first step is to test whether the variable you are interested in exhibits a high degree of spatial clustering, or "autocorrelation", which has implications for what kind of model you *should* fit to your data. 
+
+
+The first step is converting our `nb` object to a list using `nblistw()`. We include `zero.policy = TRUE` because there are a few unconnected cells in our data. The `style` argument is important here: it defines how you *weigh* the connections in your data. A common approach is to row-standardize the adjacency matrix using `style = "W"`. The strength of this approach vs. others is another decision-point in spatial analysis.
+
 ```{r}
 # store as list (most modeling packages require this)
 lw = nb2listw(nb, style = "W", zero.policy = TRUE)
-# print(lw, zero.policy = TRUE) ## to look at lw contents
+print(lw, zero.policy = TRUE) ## to look at lw contents
 ```
 
 
+A common test of spatial autocorrelation is the Moran's I test, which can be implemented with the `spdep::morant.test()` function. Below, we test whether there is spatial autocorrelation in population: 
 
+
+```{r}
+moran.test(prio_land_sp$pop_gpw_sum, listw = lw, zero.policy = TRUE)
+```
+
+There's clearly strong autocrrelation (.61) which is statistically significant (p-value is basically zero). You can also apply the Moran's I test to a vanilla model you've already fit as a test of whether a spatial econometric model would be more appropriate. 
+
+
+# Conclusion
+
+That's just the tip of the iceberg but a good place to get started. Big thanks to [Rob Williams](https://jayrobwilliams.com/) and [Jeremy Springman](https://sites.duke.edu/jeremyspringman/) for help getting me started!
