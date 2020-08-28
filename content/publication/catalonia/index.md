@@ -4,7 +4,7 @@ authors:
 - Laia Balcells
 - Spencer Dorsey
 - admin
-date: "2020-01-01T00:00:00Z"
+date: "2020-08-01T00:00:00Z"
 doi: ""
 
 
@@ -21,16 +21,16 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Forthcoming at *The British Journal of Political Science*. Winner of *ENMISA Outstanding Paper Award*.
+summary: (2020). Published in *The British Journal of Political Science*. Winner of *ENMISA Outstanding Paper Award*.
 
 
 
 # links:
 # - name: ""
 #   url: ""
-url_pdf:
+url_pdf: 'https://www.cambridge.org/core/journals/british-journal-of-political-science/article/repression-and-dissent-in-contemporary-catalonia/2C3AD879C0F86AC7E568A3C3A855B1D7'
 url_preprint: pdf/catalonia.pdf
-#url_code: 'https://www.dropbox.com/s/uwd3jt2zjiy9vah/Replication.zip?dl=0'
+url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KWS9UD'
 url_dataset: ''
 url_poster: ''
 url_project: ''

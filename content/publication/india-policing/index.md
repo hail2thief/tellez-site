@@ -12,7 +12,7 @@ doi: ""
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
 # 3 = Preprint / Working Paper; 4 = Report; 5 = Book; 6 = Book section;
 # 7 = Thesis; 8 = Patent
-publication_types: ["3"]
+publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
@@ -30,7 +30,7 @@ summary: (2020). Published in *World Politics*.
 #   url: ""
 url_pdf: https://www.cambridge.org/core/journals/world-politics/article/local-order-policing-and-bribes/C3F585376CA05ED8F483AA6453BD4565
 url_preprint: pdf/main.pdf
-#url_code: 'https://www.dropbox.com/sh/dv17mraosznasl1/AACuD2Uy4MFM_ar1TTWAFjj9a?dl=0'
+url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/5XM0XM'
 url_dataset: ''
 url_poster: ''
 url_project: ''

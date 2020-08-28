@@ -2,14 +2,14 @@
 name = "TAMU"
 
 # Optional Google font URL
-google_fonts = "Oswald|Lato:400,700|Open+Sans"
+google_fonts = "Lora:400,400i|Karla:400,400i,700,700i|Roboto+Mono"
 
 # Font families
-heading_font = "IBM Plex Sans"
-body_font = "IBM Plex Sans Light"
-nav_font = "Lato"
-mono_font = "Inconsolata"
+heading_font = "Lora"
+body_font = "Karla"
+nav_font = "Karla"
+mono_font = "Roboto Mono"
 
 # Font size
-font_size = "18"
+font_size = "20"
 font_size_small = "16"

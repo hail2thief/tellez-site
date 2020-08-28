@@ -50,6 +50,7 @@ df = tribble(
   'india-police', 'first', 'world politics', ymd("2019-02-04"), ymd("2019-06-19"),
   'road-warrior', 'first', 'jcr', ymd('2018-07-12'), ymd('2018-12-10'),
   'road-warrior', 'first', 'bjps', ymd("2020-04-30"), ymd("2020-05-19"),
+  'road-warrior', 'first', 'jpres', ymd("2020-05-19"), ymd("2020-08-11"),
   'worlds-apart', 'first', 'jcr', ymd('2017-05-07'), ymd('2017-07-21'),
   'worlds-apart', '1st revision', 'jcr', ymd('2017-08-27'), ymd('2017-12-30'),
   'worlds-apart', '2nd revision', 'jcr', ymd('2018-01-21'), ymd('2018-02-26'),
@@ -84,13 +85,13 @@ df = tribble(
   'dyads', 'first', 'apsr', ymd('2018-04-12'), ymd('2018-05-20'),
   'dyads', 'first', 'psrm', ymd('2019-07-15'), ymd('2019-12-11'),
   'dyads', 'first', 'io', ymd('2018-10-03'), ymd('2019-07-02'),
-  'election-violence', 'first', "jpres", ymd("2016-07-29"), ymd("2017-02-03"),
-  'displace', 'first', 'io', ymd("2020-01-19"), ymd("2020-04-15")) %>% 
+  'displace', 'first', 'io', ymd("2020-01-19"), ymd("2020-04-15"), 
+  'displace', '1st revision', 'io', ymd("2020-06-28"), ymd("2020-08-09"), 
+  'displace', 'first', 'apsr', ymd("2020-08-28"), ymd("2020-08-28")) %>% 
   mutate(duration = difftime(decision, submit, units = "day"),
          type = as_factor(type)) %>% 
   select(-journal) %>% 
   arrange(paper)
-pander(df)
 ```
 
 
@@ -98,8 +99,8 @@ pander(df)
 
 I'm using the `ggalt::geom_dumbbell()` geometry to visualize the trajectory of each paper. 
 
-```{r dumbbell, eval=FALSE}
-ggplot(df, aes(x = submit, xend = decision, 
+```{r dumbbell, eval=TRUE}
+p1 = ggplot(df, aes(x = submit, xend = decision, 
              y = paper, label = duration, 
              color = type)) + 
   geom_dumbbell(size = 1, size_x = 1) + 
@@ -111,10 +112,13 @@ ggplot(df, aes(x = submit, xend = decision,
   ggrepel::geom_label_repel(nudge_y = -.5, show.legend = FALSE) + 
   theme(legend.position = 'top') + 
   NULL
-ggsave("featured.png", width = 10, height = 8)
+p1
 ```
 
-[![](featured.png)](featured.png)
+
+```{r, echo=FALSE}
+ggsave("featured.png", width = 10, height = 8)
+```
 
 
 
