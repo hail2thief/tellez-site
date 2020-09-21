@@ -7,7 +7,7 @@ authors:
 tags:
 categories: []
 date: "2020-05-10"
-lastmod: "28 August, 2020"
+lastmod: "21 September, 2020"
 featured: false
 draft: false
 ---
@@ -37,7 +37,7 @@ draft: false
 p1</code></pre>
 <p><img src="/post/publishing-timeline/index_files/figure-html/dumbbell-1.png" width="960" /></p>
 <p>The first, obvious barrier to publication is getting past reviewers in the initial submission stage and to an invitation to revise and resubmit (R&amp;R). My papers have varied a lot in clearing that initial submission hurdle. Some can take a long time to find a home; <code>dyads</code> has been submitted to four different journals (actually, I think I’m missing a submission here) before landing an R&amp;R. Other papers, like <code>hierarchy-order</code>, landed an R&amp;R on the first try.</p>
-<p>Getting through that first barrier is crucial and the time to decision can vary a lot. In my experience, the median time to decision on a first submission is about 84 days, but can vary a lot: I’ve waited as long as 270 days (!!) for a response. R&amp;R’s are a good deal faster (median = 51) but also vary.</p>
+<p>Getting through that first barrier is crucial and the time to decision can vary a lot. In my experience, the median time to decision on a first submission is about 84 days, but can vary a lot: I’ve waited as long as 270 days (!!) for a response. R&amp;R’s are a good deal faster (median = 52.5) but also vary.</p>
 <pre class="r"><code>df %&gt;% 
   filter(type != &quot;3rd revision&quot;) %&gt;% # too few of these to bother
   ggplot(aes(y = type, x = duration)) + 
