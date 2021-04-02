@@ -59,7 +59,7 @@ social:
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.  
 - icon: cv
   icon_pack: ai
-  link: https://www.dropbox.com/s/fxpuemnd06izwww/tellez_cv.pdf?dl=0
+  link: https://www.dropbox.com/s/hizxjsba05884ee/tellez_cv.pdf?dl=0
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 # email: ""
