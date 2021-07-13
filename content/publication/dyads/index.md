@@ -8,7 +8,7 @@ authors:
 - Howard Liu
 - admin
 - Michael D. Ward
-date: "2020-08-17T00:00:00Z"
+date: "2021-07-01T00:00:00Z"
 doi: ""
 
 
@@ -16,7 +16,7 @@ doi: ""
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
 # 3 = Preprint / Working Paper; 4 = Report; 5 = Book; 6 = Book section;
 # 7 = Thesis; 8 = Patent
-publication_types: ["3"]
+publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
@@ -25,7 +25,7 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Revise and Resubmit at *Political Science Research Methods*.
+summary: Conditionally Accepted at *Political Science Research Methods*.
 
 
 

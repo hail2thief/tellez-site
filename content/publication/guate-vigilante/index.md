@@ -1,5 +1,5 @@
 ---
-title: "Project on motives for vigilantism in Guatemala"
+title: "Project on vigilantism in Guatemala"
 authors:
 - David Dow
 - Gabriella Levy
@@ -22,7 +22,7 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: We test competing theories of extralegal violence using observational and experimental data from 18,000 households in Guatemala.
+summary: We test competing theories of vigilantism using observational and experimental data from 18,000 households in Guatemala.
 
 
 

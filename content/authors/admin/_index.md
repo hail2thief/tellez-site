@@ -10,12 +10,12 @@ authors:
 superuser: true
 
 # Role/position
-role: Assistant Professor of <br/> Political Science
+role: Assistant Professor of Political Science
 
 # Organizations/Affiliations
 organizations:
-- name: University of South Carolina
-  url: "https://www.sc.edu/study/colleges_schools/artsandsciences/political_science/index.php"
+- name: University of California, Davis
+  url: "https://ps.ucdavis.edu/"
 
 # Short bio (displayed in user profile at end of posts)
 bio: I research and teach on armed conflict, security and development, and quantitative methods.
@@ -59,7 +59,7 @@ social:
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.  
 - icon: cv
   icon_pack: ai
-  link: https://www.dropbox.com/s/hizxjsba05884ee/tellez_cv.pdf?dl=0
+  link: https://www.dropbox.com/s/fmx1cgqubxj8wzv/tellez_cv.pdf?dl=0
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 # email: ""
@@ -71,9 +71,16 @@ social:
 # - Visitors
 ---
 
-I'm an assistant professor of political science at the [University of South Carolina](https://www.sc.edu/study/colleges_schools/artsandsciences/political_science/index.php). I completed my Ph.D. in Political Science at Duke University in the spring of 2019. 
 
-In my research, I write about armed conflict, security and development, and post-conflict transitions. You can also find some of my writing at [Political Violence at a Glance](http://politicalviolenceataglance.org/), where I am a permanent contributor. At USC, I teach courses on the study of political violence and quantitative methodology. 
+I'm an assistant professor of political science at [The University of California, Davis](https://ps.ucdavis.edu/), where I research and teach on armed conflict, security and development, post-conflict transitions, and research methods. You can also find some of my writing at [Political Violence at a Glance](https://politicalviolenceataglance.org/), where I am a permanent contributor. 
 
-I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/) where I collaborate on the design and evaluation of international development programs. To date I have worked on projects for USAID and the World Bank in Colombia, Indonesia, and Guatemala.
+I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/), where I collaborate on the design and evaluation of international development programs. To date I have worked on projects for USAID and the World Bank in Colombia, Indonesia, and Guatemala.
+
+
+I was born in Cali, Colombia, grew up in Cali/South Florida, and have lived in Texas, North Carolina, South Carolina, and now California. Outside of work, I love music, travel, cooking, and the outdoors. 
+
+
+
+
+
 
