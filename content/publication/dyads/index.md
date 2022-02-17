@@ -25,14 +25,14 @@ publication_short: ""
 abstract:
 
 # Summary. An optional shortened abstract.
-summary: Conditionally Accepted at *Political Science Research Methods*.
+summary: (2021). Published in *Political Science Research Methods*.
 
 
 
 # links:
 # - name: ""
 #   url: ""
-url_pdf:
+url_pdf: 'https://www.cambridge.org/core/journals/political-science-research-and-methods/article/abs/taking-dyads-seriously/823804FA29B988156A574C3F44280317'
 url_preprint:
 url_code: ''
 url_dataset: ''

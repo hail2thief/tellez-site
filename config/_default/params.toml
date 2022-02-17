@@ -9,7 +9,7 @@ day_night = false
 
 # Font style.
 #   Choose from `default`, `classic`, or `playfair`.
-font = "usc"
+font = "barlow"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
 description = "Juan F. Tellez is a political scientist working on armed conflict, security and development, and Latin America."

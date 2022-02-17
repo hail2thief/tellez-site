@@ -72,9 +72,7 @@ social:
 ---
 
 
-I'm an assistant professor of political science at [The University of California, Davis](https://ps.ucdavis.edu/), where I research and teach on armed conflict, security and development, post-conflict transitions, and research methods. You can also find some of my writing at [Political Violence at a Glance](https://politicalviolenceataglance.org/), where I am a permanent contributor. 
-
-I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/), where I collaborate on the design and evaluation of international development programs. To date I have worked on projects for USAID and the World Bank in Colombia, Indonesia, and Guatemala.
+I'm an assistant professor of political science at [The University of California, Davis](https://ps.ucdavis.edu/) where I research and teach on security, development, and research methods. I am also affiliated with the [DevLab@Duke](https://www.devlabduke.com/), where I collaborate on the design and evaluation of international development programs. 
 
 
 I was born in Cali, Colombia, grew up in Cali/South Florida, and have lived in Texas, North Carolina, South Carolina, and now California. Outside of work, I love music, travel, cooking, and the outdoors. 

@@ -1,5 +1,5 @@
 ---
-title: POLI301 - The Political Science Discipline
+title: POL51 - The Scientific Study of Politics
 summary: Undergraduate methods course emphasizing research design, causality, and programming.
 tags:
 - teaching

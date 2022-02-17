@@ -3,7 +3,7 @@ title: "The Rise of the Islamic State and changing patterns of cooperation in th
 authors:
 - admin
 - Jordan Roberts
-date: "2019-04-23T00:00:00Z"
+date: "2017-02-23T00:00:00Z"
 doi: ""
 
 # Schedule page publish date (NOT publication's date).
@@ -32,7 +32,7 @@ featured: false
 # - name: ""
 #   url: ""
 url_pdf: https://www.tandfonline.com/doi/full/10.1080/03050629.2019.1604520
-url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/64PBG7'
+#url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/64PBG7'
 url_dataset: ''
 url_poster: ''
 url_project: ''

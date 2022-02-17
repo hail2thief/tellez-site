@@ -30,8 +30,8 @@ featured: false
 # links:
 # - name: ""
 url_pdf: "https://journals.sagepub.com/doi/10.1177/0022343319853603"
-url_preprint: 'pdf/peace-conjoint-jpres-format.pdf'
-url_code: 'https://www.prio.org/JPR/Datasets/'
+#url_preprint: 'pdf/peace-conjoint-jpres-format.pdf'
+#url_code: 'https://www.prio.org/JPR/Datasets/'
 url_dataset: ''
 url_poster: ''
 url_project: ''

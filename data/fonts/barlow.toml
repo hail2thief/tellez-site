@@ -1,0 +1,13 @@
+# Font style metadata
+name = "barlow"
+
+
+# Font families
+heading_font = "Fira Sans Condensed"
+body_font = "Barlow"
+nav_font = "Barlow"
+mono_font = "Fira Code"
+
+# Font size
+font_size = "18"
+font_size_small = "16"

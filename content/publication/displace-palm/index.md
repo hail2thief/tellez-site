@@ -1,8 +1,8 @@
 ---
-title: "Project on wartime opportunism"
+title: "Land, opportunism, and displacement in civil wars: Evidence from Colombia"
 authors:
 - admin
-date: "2020-10-015T11:00:00Z"
+date: "2022-01-01"
 doi: ""
 
 
@@ -10,7 +10,7 @@ doi: ""
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
 # 3 = Preprint / Working Paper; 4 = Report; 5 = Book; 6 = Book section;
 # 7 = Thesis; 8 = Patent
-publication_types: ["8"]
+publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
@@ -19,7 +19,7 @@ publication_short: ""
 abstract: 
 
 # Summary. An optional shortened abstract.
-summary: Theory and test of opportunistic displacement in civil wars. 
+summary: (2021). Published in *American Political Science Review*. 
 
 tags:
 #- Source Themes
@@ -28,7 +28,7 @@ featured: false
 # links:
 # - name: ""
 #   url: ""
-url_pdf: 
+url_pdf: 'https://www.cambridge.org/core/journals/american-political-science-review/article/abs/land-opportunism-and-displacement-in-civil-wars-evidence-from-colombia/73AB8656C612C00F8B4809F10C2DE57B'
 url_preprint: 
 url_code: 
 url_dataset: ''

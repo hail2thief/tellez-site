@@ -29,8 +29,8 @@ summary: (2020). Published in *The British Journal of Political Science*. Winner
 # - name: ""
 #   url: ""
 url_pdf: 'https://www.cambridge.org/core/journals/british-journal-of-political-science/article/repression-and-dissent-in-contemporary-catalonia/2C3AD879C0F86AC7E568A3C3A855B1D7'
-url_preprint: pdf/catalonia.pdf
-url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KWS9UD'
+#url_preprint: pdf/catalonia.pdf
+#url_code: 'https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KWS9UD'
 url_dataset: ''
 url_poster: ''
 url_project: ''

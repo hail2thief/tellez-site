@@ -34,9 +34,9 @@ featured: false
 # links:
 # - name: ""
 #   url: ""
-url_pdf: 
-url_preprint: pdf/hierarchy-order.pdf
-url_code: 'https://dataverse.harvard.edu/dataverse/jop'
+url_pdf: 'https://www.journals.uchicago.edu/doi/abs/10.1086/707096?journalCode=jop'
+#url_preprint: pdf/hierarchy-order.pdf
+#url_code: 'https://dataverse.harvard.edu/dataverse/jop'
 url_dataset: ''
 url_poster: ''
 url_project: ''
