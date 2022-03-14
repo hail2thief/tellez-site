@@ -1,0 +1,22 @@
+# Theme metadata
+name: "Cross"
+
+# Is theme light or dark?
+light: true
+
+# Primary
+primary: "#122451"
+
+# Links
+link: "#122451"
+link_hover: "#ce4441"
+
+# Menu
+menu_primary: "#fff"
+menu_text: "#122451"
+menu_text_active: "#ffbb44"
+menu_title: "#494949"
+
+# Home sections
+home_section_odd: "rgb(255, 255, 255)"
+home_section_even: "rgb(247, 247, 247)"

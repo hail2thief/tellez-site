@@ -15,6 +15,10 @@ menu_text = "#FFFFFF"
 menu_text_active = "#FFBF00"
 menu_title = "#FFFFFF"
 
+# Links
+link = "#022851"
+link_hover = "#ffd06f"
+
 # Home sections
 home_section_odd = "rgb(255, 255, 255)"
 home_section_even = "rgb(255, 255, 255)"

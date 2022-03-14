@@ -3,13 +3,13 @@
 
 # Color theme.
 #   Choose from `default`, `ocean`, `forest`, `dark`, `apogee`, `1950s`, `coffee`, `cupcake`, `strawberry`.
-color_theme = "usc"
+color_theme = "nord"
 # Enable users to switch between day and night mode?
 day_night = false
 
 # Font style.
 #   Choose from `default`, `classic`, or `playfair`.
-font = "barlow"
+font = "jost"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
 description = "Juan F. Tellez is a political scientist working on armed conflict, security and development, and Latin America."
