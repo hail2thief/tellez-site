@@ -1,0 +1,235 @@
+---
+title: 'POL290'
+subtitle: Grad civil wars seminar.
+summary: Grad civil wars seminar.
+authors:
+- admin
+tags:
+- teaching
+categories: []
+date: "2022-02-18"
+lastmod: "`r format(Sys.time(), '%d %B, %Y')`"
+featured: false
+draft: false
+bibliography: /Users/juan/Dropbox/github/whistle2/master.bib
+csl: /Users/juan/Dropbox/websites/tellez-site/static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(lubridate)
+
+# function to deal with week dates (from steve miller)
+advdate <- function(obj, adv) {
+ tmon <- obj + 7*(adv-1)
+ tmp <- paste("Week", adv, "--", month(tmon, label = TRUE), day(tmon), ":")
+ return(tmp)
+}
+
+# first day of the quarter
+mon = ymd("2022-03-29")
+```
+
+
+# Course information
+
+
+<i class="fas fa-user-graduate"></i> Juan Tellez (pronounced: "Teh-yes")
+
+<i class="fas fa-envelope"></i> [jftellez@ucdavis.edu](mailto:jftellez@ucdavis.edu)
+
+<i class="fas fa-clock"></i> Tuesdays, 9:00 AM - 11:50 AM
+
+<i class="fas fa-home"></i> Kerr Hall 594
+
+<i class="fas fa-calendar-check"></i> [Office Hours](https://calendly.com/juan-f-tellez/)
+
+
+# Course description
+
+
+This course is a graduate seminar on the study of civil wars and other forms of political violence. The course is designed to prepare advanced graduate students to do research on civil wars and political violence. Each week, we will cover a mix of foundational and new research in one of (to my mind) the key active research agendas in the study of civil wars. The weekly readings are primarily how students will: a) develop a foundation in the literature; b) figure out which topic areas might drive their dissertation work. 
+
+
+The course will also emphasize applied learning through: 1) critical reviews that mirror journal article reviews; 2) a data exploration exercise; 3) an original research design. 
+
+
+
+This course is designed for graduate students who already have basic training in research design and methods. The replication assignment in particular assumes an ability to read and write code in R. If you want to take the course but have not already taken the methods sequence POL 211-213, please come talk to me.
+
+
+
+# Course policies
+
+Late proposals, papers, etc. will be penalized by a letter grade per day. 
+
+
+# Assignments
+
+
+* Weekly comments (10 percent): Each week you will post (at most) a half page of questions or bullet points comments on the readings. You can raise questions about theory, method, point out conflicts between readings, develop links with previous weeks’ readings, whatever. These needn’t be long and detailed, but they should be thoughtful. Due by **Monday 6pm before each class**. 
+* Two article reviews (30 percent): You will write two, three-page (or so, double-spaced) reviews. Your review should eschew summary in favor of critically evaluating the paper ([a great guide here](http://macartan.nyc/teaching/how-to-critique/)). The basic goal is to make a recommendation to an editor (me in this case) as to whether or not the paper should be published. If your recommendation is to "revise and resubmit" assume that implies a high probability of publication. The first review is due by **end of day Friday, April 15th**. The second review is due by **end of day Friday, May 13th**. Note that these are dissertation projects or job market papers of recent PhDs. Please review two of these three papers: 
+    * ["They're still here, he's all gone: American Fatalities in Foreign Wars and Right-Wing Radicalization at Home"](https://preprints.apsanet.org/engage/apsa/article-details/61115b4018911da2f6dd1def)
+    * ["More than money: The political consequences of compensation"](https://files.osf.io/v1/resources/akz26/providers/osfstorage/60856f96f1616000a69ced0a?action=download&direct&version=3)
+    * ["The Legacies of Atrocities and Who Fights"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3861710)
+* Data exploration (30 percent): You will be placed into two-member research teams. Each team will present for 10ish minutes on the empirics of their paper for the week. Presentations should describe the paper, put it in the context of a broader literature, and promote discussion about the empirics of the paper. You have two options: 1) explore the underlying dataset or replication data; look at distributions, patterns, temporal and spatial limitations, etc.; replicate findings or estimate different models from the authors; 2) make a tutorial / "explainer" of the methodology at the center of the paper (e.g., matching, instrumental variables, etc.). You will turn in: 
+    * an RMarkdown file to replicate all of your (1) analysis or (2) methods tutorial
+    * a cleaned .rda datafile (i.e., ready to use, only relevant variables, no "-999" for NA, etc.) for either (1) the analysis or (2) the methods tutorial
+    * your presentation slides
+* Research proposal (30 percent): 12 pages. See rubric. **Draft research proposals due May 24th by midnight. Final proposal due June 7th.** 
+
+
+
+
+
+# Schedule
+
+
+
+## `r advdate(mon, 1)`: What is civil war? 
+
+
+### Required
+
+
+* [@kalyvas:balcells:2010]
+* [@blattman:miguel:2010]
+* [@kalyvas:2003]
+* [@ward:etal:2010]
+
+
+### Recommended
+
+
+* [@kalyvas:straus:2020]
+* [@sambanis:2004]
+
+
+## `r advdate(mon, 2)` Causes of civil war
+
+
+### Required
+
+* [@fearon:laitin:2003]
+* [@cederman:etal:2011]
+* [@collier:hoeffler:2004]
+* [@carter:etal:2019]
+* [@denny:walter:2014]
+
+
+### Recommended
+
+* [@buhaug:etal:2014]
+* [@hendrix:salehyan:2012]
+* [@oloughlin:etal:2012]
+* [@cunningham:2013b]
+* [@horowitz:1985]
+
+## `r advdate(mon, 3)` Political economy of conflict
+⭐First review due: Friday, April 15th
+
+
+### Required
+
+
+* [@dube:vargas:2013]
+* [@dalbo:dalbo:2011]
+* [@sanchez:2020]
+* [@nunn:qian:2014]
+* [@berman:etal:2017]
+
+
+### Recommended
+
+
+* [@ross:2004]
+* [@azam:anke:2002]
+
+
+## `r advdate(mon, 4)` Rebel groups as organizations
+
+### Required
+
+
+* [@weinstein:2007]
+* [@parkinson:2013]
+* [@arjona:2016]
+* [@larson:lewis:2018]
+* [@siegel:2011]
+
+
+
+## `r advdate(mon, 5)` Dynamics of violence in civil wars
+
+### Required
+
+* [@kalyvas:2006]
+* [@condra:etal:2018]
+* [@albertus:2020]
+* [@schubiger:2020]
+* [@wood:2009]
+* [@acemoglu:etal:2013]
+
+
+### Recommended
+
+* [@sanin:vargas:2017]
+
+
+## `r advdate(mon, 6)` Civil war duration and termination
+
+
+## Required 
+
+* [@mattes:savun:2010]
+* [@cunningham:2006]
+* [@toft:2010]
+* [@manekin:etal:2017]
+
+
+### Recommended
+
+* [@cunningham:2011]
+* [@kaufmann:1996]
+* [@posen:1993]
+
+## `r advdate(mon, 7)` Wartime displacement
+⭐Second review due: Friday, May 17th
+
+
+* [@steele:2017]
+* [@mcnamee:2018]
+* [@lichtenheld:2020]
+* [@zhou:shaver:2021]
+* [@steele:2011]
+
+
+## `r advdate(mon, 8)` Peacekeeping and peacebuilding
+
+* [@walter:etal:2021]
+* [@matanock:2017]
+* [@fortna:2004]
+* [@cunningham:2016]
+* [@svensson:2009]
+* [@wolford:2017]
+
+
+## `r advdate(mon, 9)` Political and social consequences of war
+⭐ *DRAFT/OUTLINE RESEARCH PROPOSALS DUE 5/27 BY MIDNIGHT*
+
+* [@bauer:etal:2016]
+* [@hazlett:2020]
+* [@ch:etal:2018]
+* [@schubiger:2019]
+
+
+## `r advdate(mon, 10)` Presentations
+⭐ *FINAL PROPOSAL DUE JUNE 7th BY MIDNIGHT*
