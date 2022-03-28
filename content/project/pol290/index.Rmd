@@ -92,9 +92,10 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 # Schedule
 
+*Note: the schedule is subject to change.*
 
 
-## `r advdate(mon, 1)`: What is civil war? 
+## `r advdate(mon, 1)` What is civil war? 
 
 
 ### Required
@@ -159,7 +160,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 ### Required
 
 
-* [@weinstein:2007]
+* Chapters 1, 2, 5, 6 in [@weinstein:2007]
 * [@parkinson:2013]
 * [@arjona:2016]
 * [@larson:lewis:2018]
@@ -171,17 +172,20 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 ### Required
 
-* [@kalyvas:2006]
+* Introduction, chapter 6, and chapter 7 in [@kalyvas:2006]
 * [@condra:etal:2018]
-* [@albertus:2020]
 * [@schubiger:2020]
-* [@wood:2009]
-* [@acemoglu:etal:2013]
+* [@cohen:2013]
+* [@carey:mitchell:2017]
 
 
 ### Recommended
 
 * [@sanin:vargas:2017]
+* [@acemoglu:etal:2013]
+* [@albertus:2020]
+
+
 
 
 ## `r advdate(mon, 6)` Civil war duration and termination
@@ -220,6 +224,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 * [@cunningham:2016]
 * [@svensson:2009]
 * [@wolford:2017]
+* [@williams:2021]
 
 
 ## `r advdate(mon, 9)` Political and social consequences of war
