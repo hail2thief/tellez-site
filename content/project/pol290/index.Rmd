@@ -121,9 +121,10 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 * [@fearon:laitin:2003]
 * [@cederman:etal:2011]
-* [@collier:hoeffler:2004]
 * [@carter:etal:2019]
 * [@denny:walter:2014]
+* [@collier:hoeffler:2004]
+* [@hsiang:etal:2013]
 
 
 ### Recommended
@@ -133,6 +134,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 * [@oloughlin:etal:2012]
 * [@cunningham:2013b]
 * [@horowitz:1985]
+
 
 ## `r advdate(mon, 3)` Political economy of conflict
 ⭐First review due: Friday, April 15th
