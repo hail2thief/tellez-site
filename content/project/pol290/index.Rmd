@@ -162,11 +162,18 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 ### Required
 
 
-* Chapters 1, 2, 5, 6 in [@weinstein:2007]
-* [@parkinson:2013]
-* [@arjona:2016]
-* [@larson:lewis:2018]
+* The introduction in [@weinstein:2007]
+* Chapter 3 in [@arjona:2016]
 * [@siegel:2011]
+* [@balcells:etal:2022]
+
+
+### Recommended
+
+* [@shapiro:siegel:2012]
+* [@staniland:2012b]
+* [@parkinson:2013]
+* [@tamm:2016]
 
 
 
@@ -175,9 +182,8 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 ### Required
 
 * Introduction, chapter 6, and chapter 7 in [@kalyvas:2006]
-* [@condra:etal:2018]
 * [@schubiger:2020]
-* [@cohen:2013]
+* [@sawyer:etal:2021]
 * [@carey:mitchell:2017]
 
 
@@ -186,6 +192,9 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 * [@sanin:vargas:2017]
 * [@acemoglu:etal:2013]
 * [@albertus:2020]
+* [@cohen:2013]
+* [@condra:etal:2018]
+
 
 
 
@@ -197,8 +206,9 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 * [@mattes:savun:2010]
 * [@cunningham:2006]
-* [@toft:2010]
+* [@toft:2010a]
 * [@manekin:etal:2017]
+* [@williams:etal:2021]
 
 
 ### Recommended
@@ -207,26 +217,33 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 * [@kaufmann:1996]
 * [@posen:1993]
 
+
 ## `r advdate(mon, 7)` Wartime displacement
 ⭐Second review due: Friday, May 17th
 
+### Required
 
-* [@steele:2017]
+* [@steele:2011]
 * [@mcnamee:2018]
 * [@lichtenheld:2020]
 * [@zhou:shaver:2021]
-* [@steele:2011]
+* [@zhukov:2015]
 
 
 ## `r advdate(mon, 8)` Peacekeeping and peacebuilding
 
+
+### Required 
+
 * [@walter:etal:2021]
 * [@matanock:2017]
-* [@fortna:2004]
 * [@cunningham:2016]
-* [@svensson:2009]
+* [@beber:etal:2017]
 * [@wolford:2017]
-* [@williams:2021]
+
+
+
+### Recommended
 
 
 ## `r advdate(mon, 9)` Political and social consequences of war
@@ -236,6 +253,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 * [@hazlett:2020]
 * [@ch:etal:2018]
 * [@schubiger:2019]
+* [@lupu:peisakhin:2017]
 
 
 ## `r advdate(mon, 10)` Presentations
