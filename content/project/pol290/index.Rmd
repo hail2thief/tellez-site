@@ -152,7 +152,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 ### Recommended
 
-
+* [Revisiting the Effect of Food Aid on Conflict: A Methodological Caution](http://barrett.dyson.cornell.edu/presentations/Revisiting%20Food%20Aid%20%20Conflict%20Otago%20May%202018.pdf)
 * [@ross:2004]
 * [@azam:anke:2002]
 
@@ -182,7 +182,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 ### Required
 
 * Introduction, chapter 6, and chapter 7 in [@kalyvas:2006]
-* [@schubiger:2020]
+* [@schubiger:2019]
 * [@sawyer:etal:2021]
 * [@carey:mitchell:2017]
 
@@ -258,3 +258,9 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 ## `r advdate(mon, 10)` Presentations
 ⭐ *FINAL PROPOSAL DUE JUNE 7th BY MIDNIGHT*
+
+
+
+# Resources
+
+* The [instrumental variable](/img/instrument-simulation.R) simulation from class
