@@ -263,4 +263,33 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
 
 # Resources
 
+
+## Final research design rubric
+
+
+12 pages MAX, double-spaced.
+
+1. Introduction (2 pages)
+	1. Motivate why we should care about the question you want to answer (e.g., because of its real-world impact, as a gap in the literature)
+	2. BRIEFLY preview what the project will do (I will argue that X) and how it will do it (I will collect XYZ data)
+2. Literature review (2 pages)
+	1. Briefly describe what we already know about your topic
+	2. Highlight what is unknown or what gap your project will fill
+3. Theory + hypotheses (3 pages)
+	1. Big note: theory != literature review
+	2. Need an argument about a causal process
+	3. Think about who the actors are in your story, what they want, and how their interactions produce different outcomes
+4. Research design (3-4 pages)
+	1. Data
+		1. Where will the data come from? What is the unit of analysis (e.g., country-year)?
+		2. How will you measure the outcome variable(s)? Treatment variable(s)?
+		3. Identification strategy — how will you (try to) identify the effect of X on Y? If prediction, how will you select what variables to include in the model?
+		4. Modeling strategy — how will you model the relationship?
+5. Conclusion (1)
+	1. What will your project teach us? Or what area of policy or real-world relevance might your project touch on? 
+	2. Where else might you go from here? What other questions will you or an interested reader want to answer next?
+
+
+## Exercises
+
 * The [instrumental variable](/img/instrument-simulation.R) simulation from class
