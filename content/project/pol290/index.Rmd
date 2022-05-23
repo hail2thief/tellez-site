@@ -84,7 +84,7 @@ Late proposals, papers, etc. will be penalized by a letter grade per day.
     * an RMarkdown file to replicate all of your (1) analysis or (2) methods tutorial
     * a cleaned .rda datafile (i.e., ready to use, only relevant variables, no "-999" for NA, etc.) for either (1) the analysis or (2) the methods tutorial
     * your presentation slides
-* Research proposal (30 percent): 12 pages. See rubric. **Draft research proposals due May 24th by midnight. Final proposal due June 7th.** 
+* Research proposal (30 percent): 12 pages. See rubric. **Draft research proposals due May 27th by midnight. Final proposal due June 7th.** 
 
 
 
